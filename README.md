@@ -1,235 +1,187 @@
-![tailwind-nextjs-banner](/public/static/images/twitter-card.png)
+# Next.js Starter for WordPress Headless CMS
 
-# Tailwind Nextjs Starter Blog
+> [Watch the Demo Video](https://www.youtube.com/watch?v=JZc1-BcOvYw)
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/timlrx/tailwind-nextjs-starter-blog?style=social)](https://GitHub.com/timlrx/tailwind-nextjs-starter-blog/stargazers/)
-[![GitHub forks](https://img.shields.io/github/forks/timlrx/tailwind-nextjs-starter-blog?style=social)](https://GitHub.com/timlrx/tailwind-nextjs-starter-blog/network/)
-[![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Ftimlrxx)](https://twitter.com/timlrxx)
-[![Sponsor](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&link=https://github.com/sponsors/timlrx)](https://github.com/sponsors/timlrx)
+![WordPress_Next_js Starter by 9d8](https://github.com/9d8dev/next-wp/assets/57158102/76daa171-d286-4bd7-ae72-837c0d911f7a)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/timlrx/tailwind-nextjs-starter-blog)
+[![Deploy with Vercel](https://vercel.com/button)](<https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F9d8dev%2Fnext-wp&env=WORDPRESS_URL,WORDPRESS_HOSTNAME&envDescription=Add%20WordPress%20URL%20with%20Rest%20API%20enabled%20(ie.%20https%3A%2F%2Fwp.example.com)%20abd%20the%20hostname%20for%20Image%20rendering%20in%20Next%20JS%20(ie.%20wp.example.com)&project-name=next-wp&repository-name=next-wp&demo-title=Next%20JS%20and%20WordPress%20Starter&demo-url=https%3A%2F%2Fwp.9d8.dev>)
 
-This is a [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) blogging starter template. Probably the most feature-rich Next.js markdown blogging template out there. Comes out of the box configured with the latest technologies to make technical writing a breeze. Easily configurable and customizable. Perfect as a replacement to existing Jekyll and Hugo individual blogs.
+This is a starter template for building a Next.js application that fetches data from a WordPress site using the WordPress REST API. The template includes functions for fetching posts, categories, tags, authors, and featured media from a WordPress site and rendering them in a Next.js application.
 
-Check out the documentation below to get started.
+`next-wp` is built with [Next.js 14](https://nextjs.org/docs), [React](https://react.dev/), [Typescript](https://www.typescriptlang.org/docs/), [Tailwind](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/docs), and [brijr/craft](https://github.com/brijr/craft). It pairs nicely with [brijr/components](https://components.bridger.to/) for a rapid development experience. Built by Cameron and Bridger at [9d8](https://9d8.dev).
 
-Facing issues? Check the [FAQ page](https://github.com/timlrx/tailwind-nextjs-starter-blog/wiki) and do a search on past issues. Feel free to open a new issue if none has been posted previously.
+## Table of Contents
 
-Feature request? Check the past discussions to see if it has been brought up previously. Otherwise, feel free to start a new discussion thread. All ideas are welcomed!
+- [Next.js Starter for WordPress Headless CMS](#nextjs-starter-for-wordpress-headless-cms)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [WordPress Functions](#wordpress-functions)
+  - [WordPress Types](#wordpress-types)
+  - [Post Card Component](#post-card-component)
+    - [Props](#props)
+    - [Functionality](#functionality)
+    - [Usage](#usage)
+  - [Filter Component](#filter-component)
+    - [Props](#props-1)
+    - [Functionality](#functionality-1)
+  - [Dynamic Sitemap](#dynamic-sitemap)
 
-## Examples
+## Overview
 
-- [Demo Blog](https://tailwind-nextjs-starter-blog.vercel.app/) - this repo
-- [My personal blog](https://www.timlrx.com) - modified to auto-generate blog posts with dates
-- [Aloisdg's cookbook](https://tambouille.vercel.app/) - with pictures and recipes!
-- [GautierArcin's demo with next translate](https://tailwind-nextjs-starter-blog-seven.vercel.app/) - includes translation of mdx posts, [source code](https://github.com/GautierArcin/tailwind-nextjs-starter-blog/tree/demo/next-translate)
-- [David Levai's digital garden](https://davidlevai.com/) - customized design and added email subscriptions
-- [Thinh's Corner](https://thinhcorner.com/) - [customized layout](https://github.com/Th1nhNg0/th1nhng0.vercel.app/blob/5e73a420828d82f01e7147512a2c3273c4ec19f8/layouts/PostLayout.js) with sticky side table of contents
-- [Leo's Blog](https://leohuynh.dev) - Tuan Anh Huynh's personal site. Add Snippets Page, Author Profile Card, Image Lightbox, ...
-- [thvu.dev](https://thvu.dev) - Added `mdx-embed`, view count, reading minutes and more.
-- [fiqrychoerudin.dev](https://www.fiqrychoerudin.dev/) - simple portfolio.
-- [irvin.dev](https://www.irvin.dev/) - Irvin Lin's personal site. Added YouTube embedding.
-- [the all JavaScript Blog](https://the-all-javascript-blog.vercel.app/) - a JavaScript enlightenment blog uses this
-- [KirillSo.com](https://www.kirillso.com/) - Personal blog & website.
-- [DevBoy Blog](https://devboy.vercel.app/) - M.Reza's personal blog
-- [slightlysharpe.com](https://slightlysharpe.com) - [Tincre's](https://tincre.com) main company blog
-- [blog.b00st.com](https://blog.b00st.com) - [b00st.com's](https://b00st.com) main music promotion blog
-- [astrosaurus.me](https://astrosaurus.me/) - Ephraim Atta-Duncan's Personal Blog
-- [dhanrajsp.me](https://dhanrajsp.me/) - Dhanraj's personal site and blog.
-- [blog.r00ks.io](https://blog.r00ks.io/) - Austin Rooks's personal blog ([source code](https://github.com/Austionian/blog.r00ks)).
-- [honghong.me](https://honghong.me) - Tszhong's personal website ([source code](https://github.com/tszhong0411/home))
-- [alfoncode.com](https://alfoncode.com) - Alfonso García's personar website. Customized design ([source code](https://github.com/alfoncode/personal-web))
-- [marceloformentao.dev](https://marceloformentao.dev) - Marcelo Formentão personal website ([source code](https://github.com/marceloavf/marceloformentao.dev)).
-- [abiraja.com](https://www.abiraja.com/) - with a [runnable JS code snippet component!](https://www.abiraja.com/blog/querying-solana-blockchain)
-- [einargudni.com](https://www.einargudni.com) - with a customized theme, command pallette and more ([source code](https://github.com/einargudnig/einargudni.com))
-- [bpiggin.com](https://www.bpiggin.com) - Ben Piggin's personal blog
-- [maqib.cn](https://maqib.cn) - A blog of Chinese front-end developers 狂奔小马的博客 ([源码](https://github.com/maqi1520/nextjs-tailwind-blog))
-- [ambilena.com](https://ambilena.com/) - Electronic Music Blog & imprint for upcoming musicians.
+- `lib/wordpress.ts` -> Functions for fetching WordPress CMS via Rest API
+- `lib/wordpress.d.ts` -> Type declarations for WP Rest API
+- `components/posts/post-card.tsx` -> Component and styling for posts
+- `app/posts/filter.tsx` -> Component for handling filtering of posts
+- `/menu.config.ts` -> Site nav menu configuration for desktop and mobile
+- `/site.config.ts` -> Configuration for `sitemap.ts`
+- `app/sitemap.ts` -> Dynamically generated sitemap
 
-Using the template? Feel free to create a PR and add your blog to this list.
-
-## Motivation
-
-I wanted to port my existing blog to Nextjs and Tailwind CSS but there was no easy out of the box template to use so I decided to create one. Design is adapted from [Tailwindlabs blog](https://github.com/tailwindlabs/blog.tailwindcss.com).
-
-I wanted it to be nearly as feature-rich as popular blogging templates like [beautiful-jekyll](https://github.com/daattali/beautiful-jekyll) and [Hugo Academic](https://github.com/wowchemy/wowchemy-hugo-modules) but with the best of React's ecosystem and current web development's best practices.
-
-## Features
-
-- Easy styling customization with [Tailwind 3.0](https://tailwindcss.com/blog/tailwindcss-v3) and primary color attribute
-- Near perfect lighthouse score - [Lighthouse report](https://www.webpagetest.org/result/210111_DiC1_08f3670c3430bf4a9b76fc3b927716c5/)
-- Lightweight, 45kB first load JS, uses Preact in production build
-- Mobile-friendly view
-- Light and dark theme
-- Self-hosted font with [Fontsource](https://fontsource.org/)
-- Supports [plausible](https://plausible.io/), [simple analytics](https://simpleanalytics.com/) and google analytics
-- [MDX - write JSX in markdown documents!](https://mdxjs.com/)
-- Server-side syntax highlighting with line numbers and line highlighting via [rehype-prism-plus](https://github.com/timlrx/rehype-prism-plus)
-- Math display supported via [KaTeX](https://katex.org/)
-- Citation and bibliography support via [rehype-citation](https://github.com/timlrx/rehype-citation)
-- Automatic image optimization via [next/image](https://nextjs.org/docs/basic-features/image-optimization)
-- Flexible data retrieval with [mdx-bundler](https://github.com/kentcdodds/mdx-bundler)
-- Support for tags - each unique tag will be its own page
-- Support for multiple authors
-- Blog templates
-- TOC component
-- Support for nested routing of blog posts
-- Newsletter component with support for mailchimp, buttondown, convertkit, klaviyo and revue
-- Supports [giscus](https://github.com/laymonage/giscus), [utterances](https://github.com/utterance/utterances) or disqus
-- Projects page
-- Preconfigured security headers
-- SEO friendly with RSS feed, sitemaps and more!
-
-## Sample posts
-
-- [A markdown guide](https://tailwind-nextjs-starter-blog.vercel.app/blog/github-markdown-guide)
-- [Learn more about images in Next.js](https://tailwind-nextjs-starter-blog.vercel.app/blog/guide-to-using-images-in-nextjs)
-- [A tour of math typesetting](https://tailwind-nextjs-starter-blog.vercel.app/blog/deriving-ols-estimator)
-- [Simple MDX image grid](https://tailwind-nextjs-starter-blog.vercel.app/blog/pictures-of-canada)
-- [Example of long prose](https://tailwind-nextjs-starter-blog.vercel.app/blog/the-time-machine)
-- [Example of Nested Route Post](https://tailwind-nextjs-starter-blog.vercel.app/blog/nested-route/introducing-multi-part-posts-with-nested-routing)
-
-## Quick Start Guide
-
-1. TypeScript and Contentlayer (alpha)
-
-```
-npx degit timlrx/tailwind-nextjs-starter-blog#contentlayer
-```
-
-or JS (official support)
+There are two `env` variables are required to be set in `.env.local` file:
 
 ```bash
-npx degit https://github.com/timlrx/tailwind-nextjs-starter-blog.git
+WORDPRESS_URL="https://wordpress.com"
+WORDPRESS_HOSTNAME="wordpress.com"
 ```
 
-or with TypeScript (community support)
+You can find the example of `.env.local` file in the `.env.example` file (and in Vercel):
 
-```bash
-npx degit timlrx/tailwind-nextjs-starter-blog#typescript
-```
+## WordPress Functions
 
-2. Personalize `siteMetadata.js` (site related information)
-3. Modify the content security policy in `next.config.js` if you want to use
-   any analytics provider or a commenting solution other than giscus.
-4. Personalize `authors/default.md` (main author)
-5. Modify `projectsData.js`
-6. Modify `headerNavLinks.js` to customize navigation links
-7. Add blog posts
-8. Deploy on Vercel
+The `lib/wordpress.ts` file contains several functions for fetching data from a WordPress site using the WordPress REST API. Here's a brief overview of each function:
 
-## Installation
+- `getAllPosts(filterParams?: { author?: string; tag?: string; category?: string; })`: Fetches all posts from the WordPress site. Optionally, you can pass filter parameters to filter posts by author, tag, or category.
 
-```bash
-npm install
-```
+- `getPostById(id: number)`: Fetches a single post by its ID.
 
-## Development
+- `getPostBySlug(slug: string)`: Fetches a single post by its slug.
 
-First, run the development server:
+- `getAllCategories()`: Fetches all categories from the WordPress site.
 
-```bash
-npm start
-```
+- `getCategoryById(id: number)`: Fetches a single category by its ID.
 
-or
+- `getCategoryBySlug(slug: string)`: Fetches a single category by its slug.
 
-```bash
-npm run dev
-```
+- `getPostsByCategory(categoryId: number)`: Fetches all posts belonging to a specific category by its ID.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- `getPostsByTag(tagId: number)`: Fetches all posts tagged with a specific tag by its ID.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- `getTagsByPost(postId: number)`: Fetches all tags associated with a specific post by its ID.
 
-## Extend / Customize
+- `getAllTags()`: Fetches all tags from the WordPress site.
 
-`data/siteMetadata.js` - contains most of the site related information which should be modified for a user's need.
+- `getTagById(id: number)`: Fetches a single tag by its ID.
 
-`data/authors/default.md` - default author information (required). Additional authors can be added as files in `data/authors`.
+- `getTagBySlug(slug: string)`: Fetches a single tag by its slug.
 
-`data/projectsData.js` - data used to generate styled card on the projects page.
+- `getAllPages()`: Fetches all pages from the WordPress site.
 
-`data/headerNavLinks.js` - navigation links.
+- `getPageById(id: number)`: Fetches a single page by its ID.
 
-`data/logo.svg` - replace with your own logo.
+- `getPageBySlug(slug: string)`: Fetches a single page by its slug.
 
-`data/blog` - replace with your own blog posts.
+- `getAllAuthors()`: Fetches all authors from the WordPress site.
 
-`public/static` - store assets such as images and favicons.
+- `getAuthorById(id: number)`: Fetches a single author by their ID.
 
-`tailwind.config.js` and `css/tailwind.css` - contain the tailwind stylesheet which can be modified to change the overall look and feel of the site.
+- `getAuthorBySlug(slug: string)`: Fetches a single author by their slug.
 
-`css/prism.css` - controls the styles associated with the code blocks. Feel free to customize it and use your preferred prismjs theme e.g. [prism themes](https://github.com/PrismJS/prism-themes).
+- `getPostsByAuthor(authorId: number)`: Fetches all posts written by a specific author by their ID.
 
-`components/social-icons` - to add other icons, simply copy an svg file from [Simple Icons](https://simpleicons.org/) and map them in `index.js`. Other icons use [heroicons](https://heroicons.com/).
+- `getPostsByAuthorSlug(authorSlug: string)`: Fetches all posts written by a specific author by their slug.
 
-`components/MDXComponents.js` - pass your own JSX code or React component by specifying it over here. You can then call them directly in the `.mdx` or `.md` file. By default, a custom link and image component is passed.
+- `getPostsByCategorySlug(categorySlug: string)`: Fetches all posts belonging to a specific category by its slug.
 
-`layouts` - main templates used in pages.
+- `getPostsByTagSlug(tagSlug: string)`: Fetches all posts tagged with a specific tag by its slug.
 
-`pages` - pages to route to. Read the [Next.js documentation](https://nextjs.org/docs) for more information.
+- `getFeaturedMediaById(id: number)`: Fetches the featured media (e.g., featured image) by its ID.
 
-`next.config.js` - configuration related to Next.js. You need to adapt the Content Security Policy if you want to load scripts, images etc. from other domains.
+These functions provide a convenient way to interact with the WordPress REST API and retrieve various types of data from your WordPress site. They can be used in your Next.js application to fetch and display WordPress content.
 
-## Post
+## WordPress Types
 
-### Frontmatter
+The `lib/wordpress.d.ts` file contains TypeScript type definitions for various WordPress entities and related data structures. Here's an overview of the main types:
 
-Frontmatter follows [Hugo's standards](https://gohugo.io/content-management/front-matter/).
+- `Post`: Represents a WordPress post with properties such as `id`, `title`, `content`, `excerpt`, `author`, `categories`, `tags`, and more.
 
-Currently 7 fields are supported.
+- `Category`: Represents a WordPress category with properties like `id`, `name`, `slug`, `description`, `parent`, and `count`.
 
-```
-title (required)
-date (required)
-tags (required, can be empty array)
-lastmod (optional)
-draft (optional)
-summary (optional)
-images (optional, if none provided defaults to socialBanner in siteMetadata config)
-authors (optional list which should correspond to the file names in `data/authors`. Uses `default` if none is specified)
-layout (optional list which should correspond to the file names in `data/layouts`)
-canonicalUrl (optional, canonical url for the post for SEO)
-```
+- `Tag`: Represents a WordPress tag with properties similar to `Category`, including `id`, `name`, `slug`, `description`, and `count`.
 
-Here's an example of a post's frontmatter:
+- `Page`: Represents a WordPress page with properties like `id`, `title`, `content`, `excerpt`, `author`, `parent`, and `template`.
 
-```
----
-title: 'Introducing Tailwind Nexjs Starter Blog'
-date: '2021-01-12'
-lastmod: '2021-01-18'
-tags: ['next-js', 'tailwind', 'guide']
-draft: false
-summary: 'Looking for a performant, out of the box template, with all the best in web technology to support your blogging needs? Checkout the Tailwind Nextjs Starter Blog template.'
-images: ['/static/images/canada/mountains.jpg', '/static/images/canada/toronto.jpg']
-authors: ['default', 'sparrowhawk']
-layout: PostLayout
-canonicalUrl: https://tailwind-nextjs-starter-blog.vercel.app/blog/introducing-tailwind-nextjs-starter-blog
----
-```
+- `Author`: Represents a WordPress author with properties such as `id`, `name`, `slug`, `description`, `avatar_urls`, and `meta`.
 
-### Compose
+- `BlockType`: Represents a WordPress block type with properties like `name`, `title`, `description`, `icon`, `category`, `attributes`, and more.
 
-Run `node ./scripts/compose.js` to bootstrap a new post.
+- `EditorBlock`: Represents a block in the WordPress editor with properties like `id`, `name`, `attributes`, `innerBlocks`, and `innerHTML`.
 
-Follow the interactive prompt to generate a post with pre-filled front matter.
+- `TemplatePart`: Represents a template part in WordPress with properties such as `id`, `slug`, `theme`, `type`, `content`, `title`, and `status`.
 
-## Deploy
+- `SearchResult`: Represents a search result from WordPress with properties like `id`, `title`, `url`, `type`, and `subtype`.
 
-**Vercel**  
-The easiest way to deploy the template is to use the [Vercel Platform](https://vercel.com) from the creators of Next.js. Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `FeaturedMedia`: Represents featured media (e.g., featured image) in WordPress with properties like `id`, `title`, `caption`, `alt_text`, `media_details`, and `source_url`.
 
-**Netlify / GitHub Pages / Firebase etc.**  
-As the template uses `next/image` for image optimization, additional configurations have to be made to deploy on other popular static hosting websites like [Netlify](https://www.netlify.com/) or [GitHub Pages](https://pages.github.com/). An alternative image optimization provider such as Imgix, Cloudinary or Akamai has to be used. Alternatively, replace the `next/image` component with a standard `<img>` tag. See [`next/image` documentation](https://nextjs.org/docs/basic-features/image-optimization) for more details.
+- `FilterBarProps`: Represents the props for a filter bar component with properties `authors`, `tags`, `categories`, and selected values for each.
 
-The API routes used in the newsletter component cannot be used in a static site export. You will need to use a form API endpoint provider and substitute the route in the newsletter component accordingly. Other hosting platforms such as Netlify also offer alternative solutions - please refer to their docs for more information.
+These type definitions provide type safety and autocompletion when working with WordPress data in your Next.js application. They ensure that you are accessing the correct properties and passing the expected data types when interacting with the WordPress REST API.
 
-## Support
+## Post Card Component
 
-Using the template? Support this effort by giving a star on GitHub, sharing your own blog and giving a shoutout on Twitter or becoming a project [sponsor](https://github.com/sponsors/timlrx).
+The `components/posts/post-card.tsx` file contains the `PostCard` component, which is responsible for rendering a single post card in the application. Here's an overview of the component:
 
-## Licence
+### Props
 
-[MIT](https://github.com/timlrx/tailwind-nextjs-starter-blog/blob/master/LICENSE) © [Timothy Lin](https://www.timrlx.com)
+- `post`: A `Post` object representing the WordPress post to be rendered.
+
+### Functionality
+
+1. The component fetches the featured media, author, and category associated with the post using the `getFeaturedMediaById`, `getAuthorById`, and `getCategoryById` functions from `lib/wordpress.ts`.
+
+2. It formats the post date using the `toLocaleDateString` method with the specified options.
+
+3. The component renders a link to the individual post page using the post's slug.
+
+4. Inside the link, it displays the post's featured image, title, excerpt, category, and date.
+
+5. The post title and excerpt are rendered using the `dangerouslySetInnerHTML` attribute to handle HTML content.
+
+6. The component applies various CSS classes to style the post card, including hover effects and transitions.
+
+### Usage
+
+To use the `PostCard` component, import it into your desired page or component and pass a `Post` object as the `post` prop.
+
+## Filter Component
+
+The `components/posts/filter.tsx` file contains the `FilterPosts` component, which provides a filtering interface for posts based on tags, categories, and authors. Here's an overview of the component:
+
+### Props
+
+- `authors`: An array of `Author` objects representing the available authors to filter by.
+- `tags`: An array of `Tag` objects representing the available tags to filter by.
+- `categories`: An array of `Category` objects representing the available categories to filter by.
+- `selectedAuthor`: An optional string representing the currently selected author ID.
+- `selectedTag`: An optional string representing the currently selected tag ID.
+- `selectedCategory`: An optional string representing the currently selected category ID.
+
+### Functionality
+
+1. The component uses the `useRouter` hook from Next.js to handle navigation and URL updates based on the selected filters.
+
+2. It renders three `Select` components for filtering posts by tag, category, and author. Each `Select` component displays the available options and allows the user to select a specific value or choose "All" to reset the filter.
+
+3. When a filter value is changed, the `handleFilterChange` function is called with the filter type and selected value. It updates the URL query parameters accordingly and navigates to the updated URL.
+
+4. The component also includes a "Reset Filters" button that, when clicked, calls the `handleResetFilters` function to navigate back to the `/posts` page without any filters applied.
+
+5. The selected filter values are passed as props to the component and used to set the initial values of the `Select` components.
+
+6. The selected filter values are passed as props to the component and used to set the initial values of the `Select` components.
+
+7. The selected filter values are passed as props to the component and used to set the initial values of the `Select` components.
+
+## Dynamic Site Map
+
+The sitemap for `next-wp` is generated at `@/app/sitemap.ts` and will appear live on your site at `yourdomain.com/sitemap.xml`. In order to set up your sitemap correctly please make sure to update the `site_domain` in the `site.config.ts` to be the domain of your frontend (not your WordPress instance).
+
+Built by [Bridger Tower](https://twitter.com/bridgertower) and [Cameron Youngblood](https://twitter.com/youngbloodcyb) at [9d8](https://9d8.dev)
