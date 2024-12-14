@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Hind_Siliguri } from "next/font/google";
+import { Hind_Siliguri, Noto_Sans_Bengali } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -17,12 +17,19 @@ import Logo from "@/public/logo.png";
 
 import Image from "next/image";
 import Link from "next/link";
+import { FontLoader } from "next/font";
 
 import { cn } from "@/lib/utils";
 
-const fontSans = Hind_Siliguri({
-  weight: "300"
+const fontHindi = Hind_Siliguri({
+  weight: ["300", "600", "700"],
+  subsets: ["bengali", "latin"]
 });
+
+const fontNotoSans = Noto_Sans_Bengali({
+  weight: ["300", "600"],
+  subsets: ["bengali", "latin"]
+})
 
 export const metadata: Metadata = {
   title: "Sholo Magazine",
@@ -47,7 +54,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@100..900&display=swap" data-subset="bengali,latin" rel="stylesheet"/>      
       </head>
       <body
-        className={cn("min-h-screen font-body antialiased", fontSans.className)}
+        className={cn("min-h-screen font-body antialiased")}
       >
         <ThemeProvider
           attribute="class"
