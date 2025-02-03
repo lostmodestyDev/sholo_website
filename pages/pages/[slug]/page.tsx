@@ -1,5 +1,5 @@
 import { getPageBySlug } from "@/lib/wordpress";
-import { Section, Container, Main } from "@/components/craft";
+import { Section, Container} from "@/components/craft";
 import { Metadata } from "next";
 
 import BackButton from "@/components/back";

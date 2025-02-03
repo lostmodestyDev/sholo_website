@@ -3,12 +3,12 @@ import { Hind_Siliguri, Noto_Sans_Bengali } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/react";
 
-import "./globals.css";
+
+import "../public/globals.css";
 
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/nav/mobile-nav";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { Main } from "@/components/craft";
 import { mainMenu, contentMenu } from "@/menu.config";
 import { Section, Container } from "@/components/craft";
 import Balancer from "react-wrap-balancer";
@@ -23,12 +23,14 @@ import { cn } from "@/lib/utils";
 
 const fontHindi = Hind_Siliguri({
   weight: ["300", "600", "700"],
-  subsets: ["bengali", "latin"]
+  subsets: ["bengali", "latin"],
+  variable: '--font-hind',
 });
 
 const fontNotoSans = Noto_Sans_Bengali({
   weight: ["300", "600"],
-  subsets: ["bengali", "latin"]
+  subsets: ["bengali", "latin"],
+  variable: '--font-noto',
 })
 
 export const metadata: Metadata = {
@@ -40,22 +42,16 @@ export const metadata: Metadata = {
 
 // Revalidate content every hour
 export const revalidate = 3600;
+import type { AppProps } from 'next/app'
+import Head from "next/head";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@100..900&display=swap" data-subset="bengali,latin" rel="stylesheet"/>      
-      </head>
-      <body
-        className={cn("min-h-screen font-body antialiased")}
-      >
+    <Head>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@100..900&display=swap" data-subset="bengali,latin" rel="stylesheet" />
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -63,12 +59,14 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Nav />
-          <Main>{children}</Main>
+          <main className={`${fontHindi.variable}, ${fontNotoSans.variable}}`}>
+            <Component {...pageProps} />
+          </main>
           <Footer />
         </ThemeProvider>
         <Analytics />
       </body>
-    </html>
+    </Head>
   );
 }
 
