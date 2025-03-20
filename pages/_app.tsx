@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Hind_Siliguri, Noto_Sans_Bengali } from "next/font/google";
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -46,6 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
         <link rel="manifest" href="/site.webmanifest"/>
       </Head>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -54,6 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Nav />
           <main>
             <Component {...pageProps} />
+            <GoogleAnalytics gaId="G-JKJ6YFE2VZ" />
           </main>
           <Footer />
         </ThemeProvider>
@@ -132,7 +134,7 @@ const Footer = () => {
             </p>
           </div>
           <div className="flex flex-col gap-2 text-sm">
-            <h5 className="font-medium text-base">Website</h5>
+            <h5 className="font-medium text-base"></h5>
             {Object.entries(mainMenu).map(([key, item]) => (
               <Link
                 className="hover:underline underline-offset-4"
@@ -144,7 +146,7 @@ const Footer = () => {
             ))}
           </div>
           <div className="flex flex-col gap-2 text-sm">
-            <h5 className="font-medium text-base">Blog</h5>
+            <h5 className="font-medium text-base"></h5>
             {Object.entries(contentMenu).map(([key, item]) => (
               <Link
                 className="hover:underline underline-offset-4"
@@ -157,10 +159,10 @@ const Footer = () => {
           </div>
         </Container>
         <Container className="border-t not-prose flex flex-col md:flex-row md:gap-2 gap-6 justify-between md:items-center">
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
           <p className="text-muted-foreground">
-            © <a href="https://9d8.dev">9d8</a>. All rights reserved.
-            2024-present.
+            © <a href="https://sholo.org">Sholo</a>. All rights reserved.
+            2021-present.
           </p>
         </Container>
       </Section>

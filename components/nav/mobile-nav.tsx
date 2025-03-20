@@ -42,14 +42,14 @@ export function MobileNav() {
         </MobileLink>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="flex flex-col space-y-3">
-            <h3 className="text-small mt-6">Menu</h3>
+            <h3 className="text-small mt-6"></h3>
             <Separator />
             {Object.entries(mainMenu).map(([key, item]) => (
               <MobileLink key={key} href={item.path} onOpenChange={setOpen}>
                 {item.display}
               </MobileLink>
             ))}
-            <h3 className="text-small pt-6">Blog Menu</h3>
+            <h3 className="text-small pt-6"></h3>
             <Separator />
             {Object.entries(contentMenu).map(([key, item]) => (
               <MobileLink key={key} href={item.path} onOpenChange={setOpen}>
