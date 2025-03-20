@@ -5,6 +5,7 @@ import Link from "next/link";
 import BackButton from "@/components/back";
 import { gql } from "@apollo/client";
 import { Category } from "@/lib/wordpress.d";
+import Head from "next/head";
 
 // export async function generateMetadata(): Promise<Metadata> {
 //   return {
@@ -13,10 +14,13 @@ import { Category } from "@/lib/wordpress.d";
 //   };
 // }
 
-export default function Page({categories} : {categories: Category[]}) {
+export default function Page({ categories }: { categories: Category[] }) {
 
   return (
     <Section>
+      <Head>
+        <title>ক্যাটাগরিসমূহ | ষোলো</title>
+      </Head>
       <Container>
         <BackButton />
         <h2>All Categories</h2>

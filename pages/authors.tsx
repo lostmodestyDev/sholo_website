@@ -3,6 +3,7 @@ import Link from "next/link";
 import BackButton from "@/components/back";
 import { getApolloClient } from "@/lib/wordpress";
 import { gql } from "@apollo/client";
+import Head from "next/head";
 
 export default function Page( { authors }) {
 
@@ -17,6 +18,9 @@ export default function Page( { authors }) {
 
   return (
     <Section>
+      <Head>
+        <title>লেখক-লেখিকা | ষোলো</title>
+      </Head>
       <Container>
         <BackButton />
         <h2>All Authors</h2>

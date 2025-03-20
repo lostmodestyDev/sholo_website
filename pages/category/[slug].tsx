@@ -24,6 +24,7 @@ import {
   FeaturedMedia,
 } from "@/lib/wordpress.d";
 import { gql } from "@apollo/client";
+import Head from "next/head";
 
 // This page is using the craft.tsx component and design system
 export default function Categories({
@@ -44,6 +45,9 @@ export default function Categories({
 
   return (
     <Section>
+    <Head>
+      <title>{name} | ষোলো</title>
+    </Head>
       <Container>
 
         <article className="prose-m-none">

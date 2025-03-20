@@ -23,6 +23,7 @@ import { gql } from '@apollo/client';
 
 import Link from "next/link";
 import Balancer from "react-wrap-balancer";
+import Head from "next/head";
 
 // export async function generateMetadata({
 //   params,
@@ -48,6 +49,14 @@ export default function Page({ post, site }: { post: Post, site: Object }) {
 
   return (
     <Section>
+    <Head>
+      <title>{post.title} | ষোলো</title>        
+      <meta name="description" content={post.excerpt} />
+      <meta property="og:title" content={`${post.title} | ষোলো`} />
+      <meta property="og:description" content={post.excerpt} />
+      <meta property="og:image" content={post.featuredImage?.node?.sourceUrl} />
+      <meta property="og:url" content={`sholo.org/${post.slug}`} />
+    </Head>
       <Container>
         {featuredMedia && <div className="h-64 mb-12 md:h-[400px] overflow-hidden flex items-center justify-center border rounded-lg bg-accent/25">
           {/* eslint-disable-next-line */}

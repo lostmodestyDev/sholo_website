@@ -24,6 +24,7 @@ import {
   FeaturedMedia,
 } from "@/lib/wordpress.d";
 import { gql } from "@apollo/client";
+import Head from "next/head";
 
 // This page is using the craft.tsx component and design system
 export default function Home({
@@ -44,6 +45,9 @@ export default function Home({
 
   return (
     <Section>
+      <Head>
+        <title>{name} @ ষোলো</title>
+      </Head>
       <Container>
 
         <article className="prose-m-none">
@@ -151,7 +155,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 }
 
 export async function getStaticPaths() {
-  
+
   const apolloClient = getApolloClient()
   const { data } = await apolloClient.query({
     query: gql`
