@@ -3,5 +3,5 @@ type SiteConfig = {
 };
 
 export const siteConfig: SiteConfig = {
-  site_domain: "https://sholo.info",
+  site_domain: "https://sholo.org",
 };

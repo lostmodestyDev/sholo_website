@@ -14,7 +14,7 @@ import {
   FeaturedMedia,
 } from "@/lib/wordpress.d";
 
-import { Section, Container, Article} from "@/components/craft";
+import { Section, Container, Article } from "@/components/craft";
 import { Metadata } from "next";
 import { badgeVariants } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -36,7 +36,7 @@ import Balancer from "react-wrap-balancer";
 //   };
 // }
 
-export default function Page({ post, site }: {  post: Post, site: Object }) {
+export default function Page({ post, site }: { post: Post, site: Object }) {
   const featuredMedia = post.featuredImage?.node.sourceUrl;
   const author = post.author.node;
   const date = new Date(post.date).toLocaleDateString("en-US", {
@@ -44,12 +44,20 @@ export default function Page({ post, site }: {  post: Post, site: Object }) {
     day: "numeric",
     year: "numeric",
   });
-  const category = post.categories.nodes[0];
+  const category = post.categories ? post.categories.nodes[0] : null;
 
   return (
     <Section>
       <Container>
-        <h1>
+        {featuredMedia && <div className="h-64 mb-12 md:h-[400px] overflow-hidden flex items-center justify-center border rounded-lg bg-accent/25">
+          {/* eslint-disable-next-line */}
+          <img
+            className="w-full"
+            src={featuredMedia}
+            alt={post.title}
+          />
+        </div> }
+        <h1 className="text-left">
           <Balancer>
             <span
               dangerouslySetInnerHTML={{ __html: post.title }}
@@ -57,29 +65,21 @@ export default function Page({ post, site }: {  post: Post, site: Object }) {
           </Balancer>
         </h1>
 
-        <div className="flex justify-between items-center gap-4 text-sm mb-4">
-          <h5>
-            Published {date} by{" "}
+        <div className="gap-4 mb-4">
+          <p>
+            {date}
+            <br/>
             {author.name && (
-              <span>
-                <a href={`/author/${author.slug}`}>{author.name}</a>{" "}
-              </span>
+              <Link href={`/author/${author.slug}`}><u>{author.name}</u>
+              </Link>
             )}
-          </h5>
-          <Link
+          </p>
+          {category && <Link
             href={`/category/${category.slug}`}
             className={cn(badgeVariants({ variant: "outline" }), "not-prose")}
           >
             {category.name}
-          </Link>
-        </div>
-        <div className="h-96 my-12 md:h-[560px] overflow-hidden flex items-center justify-center border rounded-lg bg-accent/25">
-          {/* eslint-disable-next-line */}
-          <img
-            className="w-full"
-            src={featuredMedia}
-            alt={post.title}
-          />
+          </Link> }
         </div>
         <Article dangerouslySetInnerHTML={{ __html: post.content }} />
       </Container>
@@ -132,11 +132,58 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
   const post = data?.data.postBy;
 
-  if ( !post ) {
-    return {
-      props: {},
-      notFound: true
+  if (!post) {
+    const data = await apolloClient.query({
+      query: gql`
+        query PageBySlug($slug: ID!) {
+          generalSettings {
+            title
+          }
+          page(id: $slug, idType: URI) {
+            id
+            title
+            slug
+            date
+            content
+            featuredImage {
+              node {
+                sourceUrl
+              }
+            }
+            author {
+              node {
+                slug
+                name
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        slug: slug
+      }
+    });
+      
+    const site = {
+      ...data?.data.generalSettings
     }
+    const post = data?.data.page;
+
+    if(!post) {
+
+      return {
+        props: {},
+        notFound: true
+      }
+    }
+
+    return {
+      props: {
+        post,
+        site
+      }
+    }
+
   }
 
   const site = {
@@ -152,12 +199,25 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 }
 
 export async function getStaticPaths() {
-  
+
   const apolloClient = getApolloClient()
   const { data } = await apolloClient.query({
     query: gql`
-      query GetAllSlugs {
+      query GetAllPostSlugs {
         posts{
+          nodes {
+            slug
+          }
+        }
+      }
+    `,
+  });
+
+
+  const { data: pageData } = await apolloClient.query({
+    query: gql`
+      query GetAllPageSlugs {
+        pages{
           nodes {
             slug
           }
@@ -168,7 +228,11 @@ export async function getStaticPaths() {
 
   const paths = data.posts.nodes.map((node) => ({
     params: { slug: node.slug },
-  }));
+  })).concat(pageData.pages.nodes.map((node) => ({
+    params: { slug: node.slug },
+  })));
+
+
 
   return {
     paths,

@@ -26,11 +26,13 @@ import {
 import { gql } from "@apollo/client";
 
 // This page is using the craft.tsx component and design system
-export default function Home({
+export default function Categories({
   searchParams,
+  name,
   posts
 }: {
   searchParams: { [key: string]: string | undefined };
+  name: string;
   posts: Post[]
 }) {
 
@@ -46,6 +48,7 @@ export default function Home({
 
         <article className="prose-m-none">
 
+          <h2>{name}</h2>
           {posts.length > 0 ? (
             <div className="grid md:grid-cols-3 gap-4 z-0">
               {posts.map((post: any) => (
@@ -148,7 +151,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 }
 
 export async function getStaticPaths() {
-  
+
   const apolloClient = getApolloClient()
   const { data } = await apolloClient.query({
     query: gql`

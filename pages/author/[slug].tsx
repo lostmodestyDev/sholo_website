@@ -28,10 +28,12 @@ import { gql } from "@apollo/client";
 // This page is using the craft.tsx component and design system
 export default function Home({
   searchParams,
-  posts
+  posts,
+  name,
 }: {
   searchParams: { [key: string]: string | undefined };
-  posts: Post[]
+  posts: Post[],
+  name: string,
 }) {
 
   const { page: pageParam } = { page: "1" };
@@ -46,6 +48,7 @@ export default function Home({
 
         <article className="prose-m-none">
 
+          <h2>{name}</h2>
           {posts.length > 0 ? (
             <div className="grid md:grid-cols-3 gap-4 z-0">
               {posts.map((post: any) => (

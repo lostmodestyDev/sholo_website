@@ -17,27 +17,14 @@ import Logo from "@/public/logo.png";
 
 import Image from "next/image";
 import Link from "next/link";
-import { FontLoader } from "next/font";
 
 import { cn } from "@/lib/utils";
 
-const fontHindi = Hind_Siliguri({
-  weight: ["300", "600", "700"],
-  subsets: ["bengali", "latin"],
-  variable: '--font-hind',
-});
-
-const fontNotoSans = Noto_Sans_Bengali({
-  weight: ["300", "600"],
-  subsets: ["bengali", "latin"],
-  variable: '--font-noto',
-})
-
 export const metadata: Metadata = {
-  title: "Sholo Magazine",
+  title: "",
   description:
-    "A starter template for Next.js with WordPress as a headless CMS.",
-  metadataBase: new URL("https://sholo.info"),
+    "কিশোর-তরুণদের ম্যাগাজিন",
+  metadataBase: new URL("https://sholo.org"),
 };
 
 // Revalidate content every hour
@@ -61,7 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
           disableTransitionOnChange
         >
           <Nav />
-          <main className={`${fontHindi.variable}, ${fontNotoSans.variable}}`}>
+          <main>
             <Component {...pageProps} />
           </main>
           <Footer />
@@ -102,16 +89,16 @@ const Nav = ({ className, children, id }: NavProps) => {
         {children}
         <div className="flex items-center gap-2">
           <div className="mx-2 hidden md:flex">
-            {Object.entries(mainMenu).map(([key, href]) => (
-              <Button key={href} asChild variant="ghost" size="sm">
-                <Link href={href}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
+            {Object.entries(mainMenu).map(([key, item]) => (
+              <Button key={item.path} asChild variant="ghost" size="sm">
+                <Link href={item.path}>
+                  {item.display}
                 </Link>
               </Button>
             ))}
           </div>
           <Button asChild className="hidden sm:flex">
-            <Link href="/get-sholo">Get Sholo</Link>
+            <Link href="/get-sholo">ষোলো কিনুন</Link>
           </Button>
           <MobileNav />
         </div>
@@ -127,7 +114,7 @@ const Footer = () => {
         <Container className="grid md:grid-cols-[1.5fr_0.5fr_0.5fr] gap-12">
           <div className="flex flex-col gap-6 not-prose">
             <Link href="/">
-              <h3 className="sr-only">brijr/components</h3>
+              <h3 className="sr-only">Sholo Magazine</h3>
               <Image
                 src={Logo}
                 alt="Logo"
@@ -142,25 +129,25 @@ const Footer = () => {
           </div>
           <div className="flex flex-col gap-2 text-sm">
             <h5 className="font-medium text-base">Website</h5>
-            {Object.entries(mainMenu).map(([key, href]) => (
+            {Object.entries(mainMenu).map(([key, item]) => (
               <Link
                 className="hover:underline underline-offset-4"
-                key={href}
-                href={href}
+                key={item.path}
+                href={item.path}
               >
-                {key.charAt(0).toUpperCase() + key.slice(1)}
+                {item.display}
               </Link>
             ))}
           </div>
           <div className="flex flex-col gap-2 text-sm">
             <h5 className="font-medium text-base">Blog</h5>
-            {Object.entries(contentMenu).map(([key, href]) => (
+            {Object.entries(contentMenu).map(([key, item]) => (
               <Link
                 className="hover:underline underline-offset-4"
-                key={href}
-                href={href}
+                key={item.path}
+                href={item.path}
               >
-                {key.charAt(0).toUpperCase() + key.slice(1)}
+                {item.display}
               </Link>
             ))}
           </div>

@@ -49,15 +49,15 @@ export default function Home({
       <Container>
 
         <article className="prose-m-none">
-          <div className="bg-gradient-to-b from-primary to-primary-7 w-full rounded-md relative pt-16">
+          <div className="bg-gradient-to-b from-primary to-primary-7 w-full rounded-md relative pt-16 mb-8">
             <h1 className="font-display w-2/3 text-left p-8 text-primary-0"><b>যে বয়স হারিয়ে <br/>যাবার নয়</b>
             </h1>
-            <div className="flex p-8 gap-2">
-              <Button asChild className="hidden sm:flex bg-primary-0 text-primary hover:text-primary-0 shadow-lg hover:shadow-2xl">
-                <Link href="/get-sholo"><b>Get Sholo</b></Link>
+            <div className="flex p-8 gap-2 flex-col md:flex-row w-48 justify-items-start">
+              <Button asChild className="sm:flex bg-primary-0 text-primary hover:text-primary-0 shadow-lg hover:shadow-2xl">
+                <Link href="/get-sholo"><b>ষোলো কিনুন</b></Link>
               </Button>
-              <Button asChild className="hidden sm:flex bg-primary-primary text-neutral-50">
-                <Link href="/get-sholo">Scroll down to start reading Sholo!</Link>
+              <Button asChild className="sm:flex bg-primary-primary text-neutral-50">
+                <Link href="/about">আমাদের সম্পর্কে জানুন</Link>
               </Button>
             </div>
             <Image src={cloud} alt="cloud" className="h-18 w-48 absolute top-5 -left-16 z-0" />
@@ -65,10 +65,10 @@ export default function Home({
             <Image src={birds} alt="birds" className="h-40 w-48 absolute top-0 right-16 z-0" />
             <Image src={cloud} alt="cloud" className="h-18 w-48 absolute -top-6 -right-16 z-0" />
           </div>
-          <p className="border border-secondary p-8 rounded-md font-display my-8">
+          {/* <p className="border border-secondary p-8 rounded-md font-display my-8">
             কিশোর-কিশোরী, তরুণ-তরুণীরা হলো আমাদের সমাজের সবচেয়ে গুরুত্বপূর্ণ অংশ। কিন্তু তারা অবহেলার শিকার। তাদের নিষ্পাপ, সজীব প্রাণকে বিষাক্ত করার জন্য বিদ্যমান বিশ্ব কাঠামোর প্রতিটি উপাদান একযোগে কাজ করে যাচ্ছে।
             এর বিপরীতে, তাদের (বিশেষ করে স্কুল-কলেজ-ভার্সিটি পড়ুয়াদের) সুস্থ-সুন্দরভাবে বেড়ে উঠার জন্য, এবং সমাজের দায়িত্ববান সদস্য হিসেবে গড়ে তোলার জন্য প্রয়োজনীয় উদ্যোগের বেশ অভাব।
-          </p>
+          </p> */}
 
           {posts.length > 0 ? (
             <div className="grid md:grid-cols-3 gap-4 z-0">
