@@ -1,8 +1,10 @@
-import { getAllCategories } from "@/lib/wordpress";
+import { getAllCategories, getApolloClient } from "@/lib/wordpress";
 import { Section, Container } from "@/components/craft";
 import { Metadata } from "next";
 import Link from "next/link";
 import BackButton from "@/components/back";
+import { gql } from "@apollo/client";
+import { Category } from "@/lib/wordpress.d";
 
 // export async function generateMetadata(): Promise<Metadata> {
 //   return {
@@ -11,8 +13,7 @@ import BackButton from "@/components/back";
 //   };
 // }
 
-export default async function Page() {
-  const categories = await getAllCategories();
+export default function Page({categories} : {categories: Category[]}) {
 
   return (
     <Section>
@@ -29,4 +30,29 @@ export default async function Page() {
       </Container>
     </Section>
   );
+}
+
+
+export async function getStaticProps() {
+
+  const apolloClient = getApolloClient();
+
+  const { data } = await apolloClient.query({
+    query: gql`
+      query GetAllCategories {
+        categories {
+          nodes {
+            name
+            slug
+          }
+        }
+      }
+    `,
+  });
+
+  return {
+    props: {
+      categories: data.categories.nodes,
+    }
+  }
 }

@@ -73,6 +73,7 @@
 
   body {
     @apply bg-background text-foreground;
+    @apply font-body;
   }
 }
 
@@ -128,5 +129,113 @@
     -webkit-filter: blur(0px);
     filter: blur(0px);
     opacity: 1;
+  }
+}
+
+/* Global Styles */
+body {
+  @apply font-body;
+  line-height: 1.6;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+h1 {
+  @apply font-display;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  @apply font-display;
+  font-size: 2rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+  margin-top: 30px;
+}
+
+h3 {
+  font-size: 1.75rem;
+  margin-top: 25px;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1.1rem;
+}
+
+/* Paragraphs */
+p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+
+/* Blockquote */
+blockquote {
+  font-style: italic;
+  color: #555;
+  border-left: 4px solid;
+  @apply border-primary;
+  padding-left: 15px;
+  margin: 20px 0;
+}
+
+/* Lists */
+ul, ol {
+  margin: 20px 0;
+  padding-left: 20px;
+}
+
+ul li, ol li {
+  margin-bottom: 5px;
+}
+
+/* Code Blocks */
+pre {
+  padding: 15px;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-family: "Courier New", monospace;
+}
+
+code {
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin: 15px 0;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
   }
 }
