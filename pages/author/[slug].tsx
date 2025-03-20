@@ -169,7 +169,7 @@ export async function getStaticPaths() {
     `,
   });
 
-  const paths = data.users.nodes.map((node) => ({
+  const paths = data.users.nodes.map((node: any) => ({
     params: { slug: node.slug },
   }));
 

@@ -4,8 +4,9 @@ import BackButton from "@/components/back";
 import { getApolloClient } from "@/lib/wordpress";
 import { gql } from "@apollo/client";
 import Head from "next/head";
+import { Author } from "@/lib/wordpress.d";
 
-export default function Page( { authors }) {
+export default function Page( { authors } : {authors: Author[]}) {
 
   const authorsWithCount = authors.map( author => {
     const result = {

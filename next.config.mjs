@@ -10,6 +10,10 @@ const nextConfig = {
       },
     ],
   },
+  webpack(config) {
+    config.resolve.modules.push('node_modules');
+    return config;
+  },
 };
 
 export default nextConfig;

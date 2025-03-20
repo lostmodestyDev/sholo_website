@@ -150,7 +150,7 @@ export async function getStaticProps() {
     `,
   });
 
-  const posts = data?.data.posts.edges.map(({ node }) => node).map(post => {
+  const posts = data?.data.posts.edges.map(({ node } : {node: any}) => node).map((post : any) => {
     return {
       ...post,
       path: `/posts/${post.slug}`

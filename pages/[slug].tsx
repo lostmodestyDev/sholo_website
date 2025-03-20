@@ -235,9 +235,9 @@ export async function getStaticPaths() {
     `,
   });
 
-  const paths = data.posts.nodes.map((node) => ({
+  const paths = data.posts.nodes.map((node: any) => ({
     params: { slug: node.slug },
-  })).concat(pageData.pages.nodes.map((node) => ({
+  })).concat(pageData.pages.nodes.map((node: any) => ({
     params: { slug: node.slug },
   })));
 

@@ -169,7 +169,7 @@ export async function getStaticPaths() {
     `,
   });
 
-  const paths = data.categories.nodes.map((node) => ({
+  const paths = data.categories.nodes.map((node: any) => ({
     params: { slug: node.slug },
   }));
 

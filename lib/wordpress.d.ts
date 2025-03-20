@@ -117,6 +117,9 @@ export type Author = {
   avatar_urls: {
     [key: string]: string;
   };
+  posts: {
+    nodes: Post[];
+  }
   meta: any[];
 };
 
