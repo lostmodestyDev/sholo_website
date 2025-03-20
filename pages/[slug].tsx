@@ -62,7 +62,7 @@ export default function Page({ post, site }: {  post: Post, site: Object }) {
             Published {date} by{" "}
             {author.name && (
               <span>
-                <a href={`/posts/?author=${author.slug}`}>{author.name}</a>{" "}
+                <a href={`/author/${author.slug}`}>{author.name}</a>{" "}
               </span>
             )}
           </h5>
