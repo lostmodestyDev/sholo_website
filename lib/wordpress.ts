@@ -13,14 +13,43 @@ import {
   FeaturedMedia,
 } from "./wordpress.d";
 
+import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+
+let client: ApolloClient<NormalizedCacheObject>;
+
 // WordPress Config
 
-const baseUrl = process.env.WORDPRESS_URL;
+const baseUrl = process.env.WORDPRESS_URL || "https://cms.sholo.info";
 
 function getUrl(path: string, query?: Record<string, any>) {
   const params = query ? querystring.stringify(query) : null
 
   return `${baseUrl}${path}${params ? `?${params}` : ""}`
+}
+
+
+/**
+ * getApolloClient
+ */
+
+export function getApolloClient() {
+  if (!client) {
+    client = _createApolloClient();
+  }
+  return client;
+}
+
+/**
+ * createApolloClient
+ */
+
+export function _createApolloClient() {
+  return new ApolloClient({
+    link: new HttpLink({
+      uri: getUrl("/graphql"),
+    }),
+    cache: new InMemoryCache(),
+  });
 }
 
 // WordPress Functions

@@ -11,19 +11,20 @@ export type Post = {
   status: "publish" | "future" | "draft" | "pending" | "private";
   type: string;
   link: string;
-  title: {
-    rendered: string;
+  title: string;
+  content: string;
+  excerpt: string;
+  author: {
+    "node" : {
+      slug: string,
+      name: string
+    }
   };
-  content: {
-    rendered: string;
-    protected: boolean;
-  };
-  excerpt: {
-    rendered: string;
-    protected: boolean;
-  };
-  author: number;
-  featured_media: number;
+  featuredImage: {
+    node: {
+      sourceUrl: string;
+    }
+  }
   comment_status: "open" | "closed";
   ping_status: "open" | "closed";
   sticky: boolean;
@@ -40,7 +41,12 @@ export type Post = {
     | "video"
     | "audio";
   meta: any[];
-  categories: number[];
+  categories: {
+    nodes: {
+      slug: string,
+      name: string;
+    }[];
+  };
   tags: number[];
 };
 

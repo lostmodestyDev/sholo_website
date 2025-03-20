@@ -4,21 +4,15 @@ import Link from "next/link";
 import { Post } from "@/lib/wordpress.d";
 import { cn } from "@/lib/utils";
 
-import {
-  getFeaturedMediaById,
-  getAuthorById,
-  getCategoryById,
-} from "@/lib/wordpress";
-
-export default async function PostCard({ post }: { post: Post }) {
-  const media = await getFeaturedMediaById(post.featured_media);
-  const author = await getAuthorById(post.author);
+export default function PostCard({ post }: { post: Post }) {
+  // const author = await getAuthorById(post.author);
   const date = new Date(post.date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
-  const category = await getCategoryById(post.categories[0]);
+  const category = post.categories.nodes[0];
+  const hasFeaturedImage = post.featuredImage != null;
 
   return (
     <Link
@@ -29,24 +23,24 @@ export default async function PostCard({ post }: { post: Post }) {
       )}
     >
       <div className="flex flex-col gap-4">
-        <div className="h-48 w-full overflow-hidden relative rounded-md border flex items-center justify-center">
+        {hasFeaturedImage && <div className="h-48 w-full overflow-hidden relative rounded-md border flex items-center justify-center">
           <Image
             className="h-full w-full object-cover"
-            src={media.source_url}
-            alt={post.title.rendered}
+            src={post.featuredImage?.node.sourceUrl}
+            alt={post.title}
             width={400}
             height={200}
           />
-        </div>
+        </div> }
         <div
-          dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+          dangerouslySetInnerHTML={{ __html: post.title }}
           className="text-xl text-primary font-medium group-hover:underline decoration-muted-foreground underline-offset-4 decoration-dotted transition-all"
         ></div>
         <div
           className="text-sm"
           dangerouslySetInnerHTML={{
             __html:
-              post.excerpt.rendered.split(" ").slice(0, 12).join(" ").trim() +
+              post.excerpt.split(" ").slice(0, 12).join(" ").trim() +
               "...",
           }}
         ></div>

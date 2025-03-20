@@ -47,11 +47,13 @@ import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Head>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@100..900&display=swap" data-subset="bengali,latin" rel="stylesheet" />
-      <body>
+      <div>
+      <Head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@100..900&display=swap" data-subset="bengali,latin" rel="stylesheet" />
+  
+      </Head>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -65,8 +67,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Footer />
         </ThemeProvider>
         <Analytics />
-      </body>
-    </Head>
+      </div>
   );
 }
 
@@ -89,7 +90,7 @@ const Nav = ({ className, children, id }: NavProps) => {
           className="hover:opacity-75 transition-all flex gap-2 items-center"
           href="/"
         >
-          <h2 className="sr-only">next-wp starter</h2>
+          <h2 className="sr-only">Sholo</h2>
           <Image
             src={Logo}
             alt="Logo"

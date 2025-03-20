@@ -9,10 +9,6 @@ import Link from "next/link";
 import { File, Pen, TagIcon, Boxes, User, Folder } from "lucide-react";
 import Image from "next/image";
 
-import birds from "../public/birds.png";
-import cloud from "../public/cloud.png";
-import mountain from "../public/mountain.png";
-import FilterPosts from "../components/filter";
 import { getAllAuthors, getAllCategories, getAllPostCount, getAllPosts, getAllTags, getApolloClient } from "@/lib/wordpress";
 import PostCard from "@/components/posts/post-card";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
@@ -26,7 +22,7 @@ import {
   Page,
   Author,
   FeaturedMedia,
-} from "../lib/wordpress.d";
+} from "@/lib/wordpress.d";
 import { gql } from "@apollo/client";
 
 // This page is using the craft.tsx component and design system
@@ -49,33 +45,6 @@ export default function Home({
       <Container>
 
         <article className="prose-m-none">
-          <div className="bg-gradient-to-b from-primary to-primary-7 w-full rounded-md relative">
-            <h1 className="font-display w-1/3 p-16 ml-12 text-primary-0"><b>যে বয়স হারিয়ে যাবার নয়</b>
-              <Button asChild className="hidden sm:flex bg-primary-0">
-                <Link href="/get-sholo">Get Sholo</Link>
-              </Button>
-              <Button asChild className="hidden sm:flex bg-primary-primary text-neutral-950">
-                <Link href="/get-sholo">Read Sholo</Link>
-              </Button>
-            </h1>
-            <Image src={cloud} alt="cloud" className="h-18 w-48 absolute top-5 -left-16 z-0" />
-            <Image src={mountain} alt="mountain" className="h-40 w-48 absolute -bottom-8 right-0 z-0" />
-            <Image src={birds} alt="birds" className="h-40 w-48 absolute top-0 right-16 z-0" />
-            <Image src={cloud} alt="cloud" className="h-18 w-48 absolute -top-6 -right-16 z-0" />
-          </div>
-          <p className="border border-secondary p-8 rounded-md">
-            কিশোর-কিশোরী, তরুণ-তরুণীরা হলো আমাদের সমাজের সবচেয়ে গুরুত্বপূর্ণ অংশ। কিন্তু তারা অবহেলার শিকার। তাদের নিষ্পাপ, সজীব প্রাণকে বিষাক্ত করার জন্য বিদ্যমান বিশ্ব কাঠামোর প্রতিটি উপাদান একযোগে কাজ করে যাচ্ছে।
-            এর বিপরীতে, তাদের (বিশেষ করে স্কুল-কলেজ-ভার্সিটি পড়ুয়াদের) সুস্থ-সুন্দরভাবে বেড়ে উঠার জন্য, এবং সমাজের দায়িত্ববান সদস্য হিসেবে গড়ে তোলার জন্য প্রয়োজনীয় উদ্যোগের বেশ অভাব।
-          </p>
-
-          {/* <FilterPosts
-            authors={authors}
-            tags={tags}
-            categories={categories}
-             selectedAuthor={author}
-             selectedTag={tag}
-             selectedCategory={category}
-          /> */}
 
           {posts.length > 0 ? (
             <div className="grid md:grid-cols-3 gap-4 z-0">
@@ -123,19 +92,23 @@ export default function Home({
 }
 
 
-export async function getStaticProps() {
-  const apolloClient = getApolloClient();
+
+
+export async function getStaticProps({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+
+  const apolloClient = getApolloClient()
 
   const data = await apolloClient.query({
     query: gql`
-      {
+      query PostsByCategorySlug($id: ID!) {
         generalSettings {
           title
-          description
         }
-        posts(first: 10000) {
-          edges {
-            node {
+          category(id: $id, idType: SLUG) {
+          name
+          posts(first: 10000) {
+            nodes {
               id
               excerpt
               title
@@ -156,23 +129,45 @@ export async function getStaticProps() {
         }
       }
     `,
-  });
-
-  const posts = data?.data.posts.edges.map(({ node }) => node).map(post => {
-    return {
-      ...post,
-      path: `/posts/${post.slug}`
+    variables: {
+      id: slug
     }
   });
 
-  const page = {
+  const site = {
     ...data?.data.generalSettings
   }
 
   return {
     props: {
-      page,
-      posts
+      posts: data?.data.category.posts.nodes,
+      name: data?.data.category.name,
+      site
     }
   }
+}
+
+export async function getStaticPaths() {
+  
+  const apolloClient = getApolloClient()
+  const { data } = await apolloClient.query({
+    query: gql`
+      query GetAllSlugs {
+        categories {
+          nodes {
+            slug
+          }
+        }
+      }
+    `,
+  });
+
+  const paths = data.categories.nodes.map((node) => ({
+    params: { slug: node.slug },
+  }));
+
+  return {
+    paths,
+    fallback: "blocking", // Generates new pages if they don’t exist
+  };
 }
