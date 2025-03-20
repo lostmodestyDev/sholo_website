@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = {
   title: "ষোলো",
   description:
-    "কিশোর-তরুণদের ম্যাগাজিন",
+    "‘ষোলো’ হলো কিশোর-কিশোরী, তরুণ-তরুণীদের জন্য প্রকাশিত ম্যাগাজিন যার লক্ষ্য: কিশোর-কিশোরী ও তরুণ-তরুণীদের ইসলামী মূল্যবোধে দীক্ষিত করে সমাজের দায়িত্বশীল সদস্য হিসেবে গড়ে তোলা।",
   metadataBase: new URL("https://sholo.org"),
 };
 
@@ -37,6 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <div>
       <Head>
         <title>{metadata.title?.toString()}</title>
+        <meta name="description" content="‘ষোলো’ হলো কিশোর-কিশোরী, তরুণ-তরুণীদের জন্য প্রকাশিত ম্যাগাজিন যার লক্ষ্য: কিশোর-কিশোরী ও তরুণ-তরুণীদের ইসলামী মূল্যবোধে দীক্ষিত করে সমাজের দায়িত্বশীল সদস্য হিসেবে গড়ে তোলা।" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@100..900&display=swap" data-subset="bengali,latin" rel="stylesheet" />
@@ -131,6 +132,9 @@ const Footer = () => {
             </Link>
             <p>
               <Balancer>{metadata.description}</Balancer>
+            </p>
+            <p className="text-muted-foreground text-xs">
+              বিঃদ্রঃ ষোলো সম্পূর্ণ অলাভজনক এবং অরাজনৈতিক একটি স্বতন্ত্র উদ্যোগ। ষোলো কোনো নির্দিষ্ট গোষ্ঠী, দল বা সংগঠনকে নয়; বরং আল্লাহকে সন্তুষ্ট করার জন্যই সকল কাজ পরিচালনা করে থাকে।
             </p>
           </div>
           <div className="flex flex-col gap-2 text-sm">
