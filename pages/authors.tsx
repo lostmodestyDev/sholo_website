@@ -44,7 +44,7 @@ export async function getStaticProps() {
   const { data } = await apolloClient.query({
     query: gql`
       query GetAllAuthors {
-        users {
+        users(first: 1000) {
           nodes {
             name
             slug

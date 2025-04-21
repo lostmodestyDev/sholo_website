@@ -55,9 +55,9 @@ export default function Home({
 
         <article className="prose-m-none">
           <div className="bg-gradient-to-b from-primary to-primary-7 w-full rounded-md relative md:py-16 mb-8 md:pl-16 py-8 pl-8">
-            <h1 className="font-display w-2/3 text-left p-8 text-primary-0"><b>যে বয়স হারিয়ে <br/>যাবার নয়</b>
+            <h1 className="font-display w-2/3 text-left p-2 mt-8 md:p-8 text-primary-0"><b>যে বয়স হারিয়ে <br/>যাবার নয়</b>
             </h1>
-            <div className="flex p-2 md:p-8 gap-2 flex-col md:flex-row w-48 justify-items-start z-2 relative">
+            <div className="flex p-2 md:p-8 gap-2 flex-col md:flex-row w-48 justify-items-start z-2 relative z-10">
               <Button asChild className="sm:flex bg-primary-0 text-primary hover:text-primary-0 shadow-lg hover:shadow-2xl">
                 <Link href="/get-sholo"><b>ষোলো কিনুন</b></Link>
               </Button>
@@ -66,9 +66,9 @@ export default function Home({
               </Button>
             </div>
             <Image src={cloud} alt="cloud" className="h-20 w-64 absolute -top-8 -left-16 z-0" />
-            <Image src={mountain} alt="mountain" className="h-40 w-48 absolute -bottom-3.5 right-0 z-0" />
-            <Image src={birds} alt="birds" className="h-40 w-48 absolute top-0 right-16 z-0" />
-            <Image src={cloud} alt="cloud" className="h-18 w-48 absolute top-24 -right-16 z-0" />
+            <Image src={mountain} alt="mountain" className="h-40 w-48 absolute -bottom-3.5 right-0 z-1" />
+            <Image src={birds} alt="birds" className="h-40 w-48 absolute top-0 md:right-16 right-2 z-0" />
+            <Image src={cloud} alt="cloud" className="md:h-18 md:w-48 h-10 w-28 absolute top-20 md:-right-16 -right-2 z-0" />
           </div>
           {/* <p className="border border-secondary p-8 rounded-md font-display my-8">
             কিশোর-কিশোরী, তরুণ-তরুণীরা হলো আমাদের সমাজের সবচেয়ে গুরুত্বপূর্ণ অংশ। কিন্তু তারা অবহেলার শিকার। তাদের নিষ্পাপ, সজীব প্রাণকে বিষাক্ত করার জন্য বিদ্যমান বিশ্ব কাঠামোর প্রতিটি উপাদান একযোগে কাজ করে যাচ্ছে।

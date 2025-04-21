@@ -25,7 +25,7 @@ export default function Page({ categories }: { categories: Category[] }) {
         <BackButton />
         <h2>All Categories</h2>
         <div className="grid">
-          {categories.map((category: any) => (
+          {categories.filter(c => c.name != "Uncategorized").map((category: any) => (
             <Link key={category.slug} href={`/category/${category.slug}`}>
               {category.name}
             </Link>
@@ -44,7 +44,7 @@ export async function getStaticProps() {
   const { data } = await apolloClient.query({
     query: gql`
       query GetAllCategories {
-        categories {
+        categories(first: 1000) {
           nodes {
             name
             slug
