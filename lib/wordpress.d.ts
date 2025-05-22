@@ -11,6 +11,7 @@ export type Post = {
   status: "publish" | "future" | "draft" | "pending" | "private";
   type: string;
   link: string;
+  url: string;
   title: string;
   content: string;
   excerpt: string;

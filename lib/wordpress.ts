@@ -99,6 +99,14 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   return post[0];
 }
 
+
+export async function findPosts(term: string): Promise<Post[]> {
+  const url = getUrl("/wp-json/wp/v2/search", { search: term });
+  const response = await fetch(url);
+  const posts: Post[] = await response.json();
+  return posts;
+}
+
 export async function getAllCategories(): Promise<Category[]> {
   const url = getUrl("/wp-json/wp/v2/categories");
   const response = await fetch(url);

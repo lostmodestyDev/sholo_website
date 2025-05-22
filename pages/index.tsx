@@ -2,11 +2,7 @@
 import { Section, Container } from "@/components/craft";
 import Balancer from "react-wrap-balancer";
 
-// Components
 import Link from "next/link";
-
-// Icons
-import { File, Pen, TagIcon, Boxes, User, Folder } from "lucide-react";
 import Image from "next/image";
 
 import birds from "../public/birds.png";
@@ -14,15 +10,13 @@ import cloud from "../public/cloud.png";
 import mountain from "../public/mountain.png";
 import { getApolloClient } from "@/lib/wordpress";
 import PostCard from "@/components/posts/post-card";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 import {
   Post,
 } from "../lib/wordpress.d";
 import { gql } from "@apollo/client";
 import Head from "next/head";
-import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 // This page is using the craft.tsx component and design system
@@ -89,30 +83,6 @@ export default function Home({
 
           <div className="mt-8 not-prose">
             <Button variant={totalPosts >= loaded ? "outline" : "ghost"} disabled={totalPosts < loaded} onClick={loadMore}>Load More</Button>
-            {/* <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    className={currentPage === 1 ? "pointer-events-none text-muted" : ""}
-                    href={`/?page=${Math.max(currentPage - 1, 1)}
-                  }`}
-                  />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href={`/?page=${currentPage}`}>
-                    {currentPage}
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationNext
-                    className={
-                      currentPage === totalPages ? "pointer-events-none text-muted" : ""
-                    }
-                    href={`/?page=${Math.min(currentPage + 1, totalPages)}`}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination> */}
           </div>
         </article>
       </Container>

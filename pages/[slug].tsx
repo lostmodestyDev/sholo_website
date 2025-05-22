@@ -24,6 +24,7 @@ import { gql } from '@apollo/client';
 import Link from "next/link";
 import Balancer from "react-wrap-balancer";
 import Head from "next/head";
+import { SocialShare } from "@/components/ui/social-share";
 
 // export async function generateMetadata({
 //   params,
@@ -37,7 +38,7 @@ import Head from "next/head";
 //   };
 // }
 
-export default function Page({ post, site }: { post: Post, site: Object }) {
+export default function Page({ post, site, type }: { post: Post, site: Object, type: "post" | "page" }) {
   const featuredMedia = post.featuredImage?.node.sourceUrl;
   const author = post.author.node;
   const date = new Date(post.date).toLocaleDateString("en-US", {
@@ -49,14 +50,16 @@ export default function Page({ post, site }: { post: Post, site: Object }) {
 
   return (
     <Section>
-    <Head>
-      <title>{post.title} | ষোলো</title>        
-      <meta name="description" content={post.excerpt} />
-      <meta property="og:title" content={`${post.title} | ষোলো`} />
-      <meta property="og:description" content={post.excerpt} />
-      <meta property="og:image" content={post.featuredImage?.node?.sourceUrl} />
-      <meta property="og:url" content={`sholo.org/${post.slug}`} />
-    </Head>
+      <Head>
+        <title>{post.title} | ষোলো</title>
+        <meta name="description" content={post.excerpt} />
+        <meta property="image" content={post.featuredImage?.node?.sourceUrl} />
+        <meta property="url" content={`sholo.org/${post.slug}`} />
+        <meta property="og:title" content={`${post.title} | ষোলো`} />
+        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:image" content={post.featuredImage?.node?.sourceUrl} />
+        <meta property="og:url" content={`sholo.org/${post.slug}`} />
+      </Head>
       <Container>
         {featuredMedia && <div className="h-64 mb-12 md:h-[400px] overflow-hidden flex items-center justify-center border rounded-lg bg-accent/25">
           {/* eslint-disable-next-line */}
@@ -65,7 +68,7 @@ export default function Page({ post, site }: { post: Post, site: Object }) {
             src={featuredMedia}
             alt={post.title}
           />
-        </div> }
+        </div>}
         <h1 className="text-left">
           <Balancer>
             <span
@@ -74,23 +77,29 @@ export default function Page({ post, site }: { post: Post, site: Object }) {
           </Balancer>
         </h1>
 
-        <div className="gap-4 mb-4">
-          <p>
-            {date}
-            <br/>
-            {author.name && (
-              <Link href={`/author/${author.slug}`}><u>{author.name}</u>
-              </Link>
-            )}
-          </p>
-          {category && <Link
-            href={`/category/${category.slug}`}
-            className={cn(badgeVariants({ variant: "outline" }), "not-prose")}
-          >
-            {category.name}
-          </Link> }
-        </div>
+        {type == "post" &&
+          <div><div className="gap-4 mb-4">
+            <p>
+              {date}
+              <br />
+              {author.name && (
+                <Link href={`/author/${author.slug}`}><u>{author.name}</u>
+                </Link>
+              )}
+            </p>
+            {category && <Link
+              href={`/category/${category.slug}`}
+              className={cn(badgeVariants({ variant: "outline" }), "not-prose")}
+            >
+              {category.name}
+            </Link>}
+          </div>
+          </div>
+        }
         <Article dangerouslySetInnerHTML={{ __html: post.content }} />
+
+        <SocialShare url={`https://sholo.org/${post.slug}`}/>
+        
       </Container>
     </Section>
   );
@@ -172,13 +181,13 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
         slug: slug
       }
     });
-      
+
     const site = {
       ...data?.data.generalSettings
     }
     const post = data?.data.page;
 
-    if(!post) {
+    if (!post) {
 
       return {
         props: {},
@@ -189,7 +198,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     return {
       props: {
         post,
-        site
+        site,
+        type: "page"
       }
     }
 
@@ -202,7 +212,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
   return {
     props: {
       post,
-      site
+      site,
+      type: "post"
     }
   }
 }
