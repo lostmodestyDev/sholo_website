@@ -1,6 +1,8 @@
-import { createClient } from '@supabase/supabase-js'
 import React, { useState } from 'react'
 import { Modal } from "@/components/ui/modal"
+import { google } from "googleapis"
+import fs from "fs/promises"
+import path from "path"
 
 import {
     Select,
@@ -144,6 +146,7 @@ export default function GetSholo(props: GetSholoProps) {
 
     const [selectedDivision, setSelectedDivision] = useState<string>("")
     const [selectedDistrict, setSelectedDistrict] = useState<string>("")
+    const [searchTerm, setSearchTerm] = useState("")
 
     const [isProductImageModalOpen, setProductImageModalOpen] = useState(false)
     const [product, setProduct] = useState<{ images: string[], title: string }>({ images: [], title: "" })
@@ -215,19 +218,38 @@ export default function GetSholo(props: GetSholoProps) {
                     {selectedDivision && selectedDistrict && (
                         <div className="my-8 max-w-4xl mx-auto">
                             <h2 className="text-xl font-bold mb-4">এই জেলায় প্রতিনিধিরা</h2>
-                            {filteredRepresentitives.length > 0 ? (
+                            {/* Quick search filter */}
+                            <input
+                                type="text"
+                                placeholder="প্রতিনিধির নাম, লোকেশন বা ফোন নম্বর দিয়ে খুঁজুন"
+                                className="mb-4 w-full px-3 py-2 border rounded"
+                                value={searchTerm}
+                                onChange={e => setSearchTerm(e.target.value)}
+                            />
+                            {filteredRepresentitives
+                                .filter(rep =>
+                                    rep.name.includes(searchTerm) ||
+                                    rep.location.includes(searchTerm) ||
+                                    ("" + rep.phone).includes(searchTerm)
+                                ).length > 0 ? (
                                 <ul className="space-y-4 m-0 p-0 list-none">
-                                    {filteredRepresentitives.map(rep => (
-                                        <li key={rep.id} className="border rounded p-4 flex flex-col sm:flex-row sm:items-center justify-between">
-                                            <div>
-                                                <div className="font-semibold">{rep.location}</div>
-                                                <div className="text-sm text-gray-600">{rep.name}</div>
-                                            </div>
-                                            <div className="text-sm mt-2 sm:mt-0">
-                                                ফোন: <a href={`tel:${"+880" + rep.phone}`} className="text-blue-600">{"0" + rep.phone}</a>
-                                            </div>
-                                        </li>
-                                    ))}
+                                    {filteredRepresentitives
+                                        .filter(rep =>
+                                            rep.name.includes(searchTerm) ||
+                                            rep.location.includes(searchTerm) ||
+                                            ("" + rep.phone).includes(searchTerm)
+                                        )
+                                        .map(rep => (
+                                            <li key={rep.id} className="border rounded p-4 flex flex-col sm:flex-row sm:items-center justify-between">
+                                                <div>
+                                                    <div className="font-semibold">{rep.location}</div>
+                                                    <div className="text-sm text-gray-600">{rep.name}</div>
+                                                </div>
+                                                <div className="text-sm mt-2 sm:mt-0">
+                                                    ফোন: <a href={`tel:${"+880" + rep.phone}`} className="text-blue-600">{"0" + rep.phone}</a>
+                                                </div>
+                                            </li>
+                                        ))}
                                 </ul>
                             ) : (
                                 <div>এই জেলায় কোনো প্রতিনিধি পাওয়া যায়নি।</div>
@@ -317,25 +339,49 @@ export default function GetSholo(props: GetSholoProps) {
 }
 
 
-export async function getStaticProps({ params }: { params: { slug: string } }) {
+export async function getStaticProps() {
+    const sheetId = process.env.GOOGLE_SHEETS_ID
+    const credentialsJson = process.env.GOOGLE_SHEETS_CREDENTIALS_JSON
 
-    const supabaseUrl = 'https://jjkkullfhijrqzqicejb.supabase.co'
-    const supabaseKey: string | undefined = process.env.SUPABASE_KEY
-    const supabase = createClient(supabaseUrl, supabaseKey || "")
-
-    const { data, error } = await supabase
-        .from('protinidhi')
-        .select('*')
-
-    if (error) {
-        console.error('Error fetching data:', error)
-        return { representitives: null }
+    if (!sheetId) {
+        throw new Error("GOOGLE_SHEETS_ID env variable not set")
     }
+    if (!credentialsJson) {
+        throw new Error("GOOGLE_SHEETS_CREDENTIALS_JSON env variable not set")
+    }
+
+    // Parse credentials from env variable
+    const credentials = JSON.parse(credentialsJson)
+
+    // Authenticate
+    const auth = new google.auth.GoogleAuth({
+        credentials,
+        scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
+    })
+    const sheets = google.sheets({ version: "v4", auth })
+
+    // Read data
+    const range = "Sheet1!A2:F"
+    const response = await sheets.spreadsheets.values.get({
+        spreadsheetId: sheetId,
+        range,
+    })
+
+    // Map rows to your type
+    const rows = response.data.values || []
+    const representitives = rows.map((row, idx) => ({
+        id: row[0],
+        name: row[1] || "",
+        phone: Number(row[2]) || 0,
+        location: row[3] || "",
+        district: row[4] || "",
+        division: row[5] || "",
+    }))
 
     return {
         props: {
-            representitives: data
-        }
+            representitives,
+        },
+        revalidate: 3600,
     }
-
 }
