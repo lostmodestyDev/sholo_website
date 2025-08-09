@@ -160,7 +160,7 @@ export default function GetSholo(props: GetSholoProps) {
                 "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-9.jpg",
                 "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-9.jpg"
             ],
-            title: "ষোলো ম্যাগাজিন ৯"
+            title: "৯ম সংখ্যা"
         },
         {
             type: "magazine",
@@ -170,7 +170,7 @@ export default function GetSholo(props: GetSholoProps) {
                 "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-8.jpg",
                 "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-8.jpg"
             ],
-            title: "ষোলো ম্যাগাজিন ৮"
+            title: "৮ম সংখ্যা"
         },
         {
             type: "tshirt",
@@ -180,7 +180,7 @@ export default function GetSholo(props: GetSholoProps) {
                 "https://cms.sholo.info/wp-content/uploads/2025/07/Sholo-T-shirt.jpg",
                 "https://cms.sholo.info/wp-content/uploads/2025/07/Sholo-T-shirt.jpg"
             ],
-            title: "ষোলো টি-শার্ট"
+            title: "টি-শার্ট"
         },
     ]
 
@@ -204,7 +204,7 @@ export default function GetSholo(props: GetSholoProps) {
                 onOpenChange={() => setProductImageModalOpen(false)}
                 product={product}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+            <div className="flex flex-col-reverse sm:grid sm:grid-cols-2 gap-6 mt-8">
                 <div>
                     <RepresentitiveDropdown
                         representitives={representitives}
@@ -262,11 +262,11 @@ export default function GetSholo(props: GetSholoProps) {
                 </div>
 
                 <div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8 max-w-5xl mx-auto">
+                    <div className="grid grid-cols-2 gap-2 md:gap-6 my-4 md:my-8 max-w-5xl mx-auto">
                         {products.map((product) => (
                             <div
                                 key={product.title}
-                                className="rounded-lg border bg-card text-card-foreground shadow-sm flex items-start p-4 hover:border-primary hover:shadow-lg cursor-pointer transition-all duration-200 ease-in-out"
+                                className="rounded-lg border bg-card text-card-foreground shadow-sm flex items-start p-2 md:p-4 hover:border-primary hover:shadow-lg cursor-pointer transition-all duration-200 ease-in-out"
 
                                 onClick={() => {
                                     setProduct(product)
@@ -279,9 +279,9 @@ export default function GetSholo(props: GetSholoProps) {
                                     alt={product.title}
                                     className="w-20 h-30 object-cover rounded-md"
                                 />
-                                <div className='flex flex-col items-start py-4 px-2'>
-                                    <div className="font-display font-semibold text-lg">{product.title}</div>
-                                    <div className="text-base font-medium text-primary">মূল্য: {enToBnNumber(product.price)} টাকা</div>
+                                <div className='flex flex-col items-start py-6 px-2'>
+                                    <div className="font-display font-semibold md:text-lg">{product.title}</div>
+                                    <div className="text-base font-medium text-primary">{enToBnNumber(product.price)} টাকা</div>
                                 </div>
                             </div>
                         ))}

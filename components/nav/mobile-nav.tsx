@@ -6,7 +6,7 @@ import Link, { LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 
 // Utility Imports
-import { Menu, ArrowRightSquare } from "lucide-react";
+import { Menu, ArrowRightSquare, SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Component Imports
@@ -17,11 +17,21 @@ import { Separator } from "@/components/ui/separator";
 
 import { mainMenu, contentMenu } from "@/menu.config";
 
-export function MobileNav({title} : {title: string | undefined}) {
+export function MobileNav({ title, setSearchOpen }: { title: string | undefined, setSearchOpen: (open: boolean) => void }) {
   const [open, setOpen] = React.useState(false);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
+
+      <button
+        onClick={() => {
+          setSearchOpen(true);
+        }}
+        className="p-2 rounded-full cursor-pointer text-neutral-700 hover:bg-neutral-100 md:hidden"
+      >
+        <SearchIcon />
+        <span className="sr-only">search</span>
+      </button>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
@@ -31,6 +41,7 @@ export function MobileNav({title} : {title: string | undefined}) {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
+
       <SheetContent side="left" className="pr-0">
         <MobileLink
           href="/"

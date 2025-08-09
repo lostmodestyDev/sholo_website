@@ -48,6 +48,13 @@ export default function Page({ post, site, type }: { post: Post, site: Object, t
   });
   const category = post.categories ? post.categories.nodes[0] : null;
 
+  const contentWithTargetBlank = post.content
+  ? post.content.replace(
+      /<a\s(?![^>]*\btarget=)[^>]*href=/gi,
+      '<a target="_blank" rel="noopener noreferrer" href='
+    )
+  : "";
+
   return (
     <Section>
       <Head>
@@ -96,7 +103,7 @@ export default function Page({ post, site, type }: { post: Post, site: Object, t
           </div>
           </div>
         }
-        <Article dangerouslySetInnerHTML={{ __html: post.content }} />
+        <Article dangerouslySetInnerHTML={{ __html: contentWithTargetBlank }} />
 
         <SocialShare url={`https://sholo.org/${post.slug}`}/>
         

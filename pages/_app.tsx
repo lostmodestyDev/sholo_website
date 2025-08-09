@@ -8,7 +8,6 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/nav/mobile-nav";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { mainMenu, contentMenu } from "@/menu.config";
 import { Section, Container } from "@/components/craft";
 import Balancer from "react-wrap-balancer";
@@ -20,6 +19,7 @@ import Logo from "@/public/logo.png";
 
 
 import { cn } from "@/lib/utils";
+import React, { useState} from 'react';
 
 export const metadata: Metadata = {
   title: "ষোলো",
@@ -32,7 +32,6 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 import type { AppProps } from 'next/app'
 import Head from "next/head";
-import React, { useState } from 'react';
 import { findPosts } from "@/lib/wordpress";
 import { Post } from "@/lib/wordpress.d";
 import { SearchIcon } from "lucide-react";
@@ -41,7 +40,6 @@ import { SearchIcon } from "lucide-react";
 export const SearchModal = ({ open, onClose }: { open: boolean, onClose: () => void }) => {
   const [searchHits, setSearchHits] = useState<Post[] | null>(null);
   const [searchText, setSearchText] = useState('');
-
 
   async function search(query: string) {
     const posts = await findPosts(query);
@@ -56,7 +54,7 @@ export const SearchModal = ({ open, onClose }: { open: boolean, onClose: () => v
 
   return (
     <Modal isOpen={open} onClose={_onClose} className="max-w-sm">
-      <div className="max-w-md">
+      <div className="max-w-md" autoFocus>
         <div className="rounded-lg shadow-xl bg-neutral-50">
           <div className="flex">
             <form
@@ -75,8 +73,9 @@ export const SearchModal = ({ open, onClose }: { open: boolean, onClose: () => v
               <input
                 type="search"
                 placeholder="Find what you need..."
-                className="w-full px-4 py-2 border-transparent rounded-lg focus:border-transparent active:ring-0 focus:ring-0 font-regular placeholder-neutral-500 bg-neutral-50"
+                className="w-full px-4 py-2 border-transparent rounded-lg focus:border-transparent focus:ring-0 font-regular placeholder-neutral-500"
                 value={searchText}
+                autoFocus
                 onChange={(e) => {
                   setSearchText(e.target.value);
                 }}
@@ -181,7 +180,7 @@ const Nav = ({ className, children, id }: NavProps) => {
         </Link>
         {children}
         <div className="flex items-center gap-2">
-          
+
           <div className="mx-2 hidden md:flex">
             {Object.entries(mainMenu).map(([key, item]) => (
               <Button key={item.path} asChild variant="ghost" size="sm">
@@ -191,7 +190,7 @@ const Nav = ({ className, children, id }: NavProps) => {
               </Button>
             ))}
 
-          <button
+            <button
               onClick={() => {
                 setOpen(true);
               }}
@@ -200,12 +199,12 @@ const Nav = ({ className, children, id }: NavProps) => {
               <SearchIcon />
               <span className="sr-only">search</span>
             </button>
-            <SearchModal open={open} onClose={() => setOpen(false)}/>
+            <SearchModal open={open} onClose={() => setOpen(false)} />
           </div>
           <Button asChild className="hidden sm:flex">
             <Link href="/get-sholo">ষোলো কিনুন</Link>
           </Button>
-          <MobileNav title={metadata.title?.toString()} />
+          <MobileNav title={metadata.title?.toString()} setSearchOpen={setOpen} />
         </div>
       </div>
     </nav>
