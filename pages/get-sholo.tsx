@@ -49,7 +49,7 @@ const ProductImageModal = ({
 }) => (
     <Modal isOpen={isOpen} onClose={onOpenChange} className="max-w-2xl">
 
-        {product.images.length > 1 && (
+        {product.images.length > 0 && (
             <div className="flex space-x-2 mb-4">
                 {product.images.map((img, idx) => (
                     <img
@@ -151,14 +151,22 @@ export default function GetSholo(props: GetSholoProps) {
     const [isProductImageModalOpen, setProductImageModalOpen] = useState(false)
     const [product, setProduct] = useState<{ images: string[], title: string }>({ images: [], title: "" })
 
-    const products = [
+    const products = [{
+            type: "magazine",
+            SKU: "MAG-9",
+            price: 60,
+            images: [
+                "https://cms.sholo.info/wp-content/uploads/2025/09/Sholo-July-Cover-FInal-small.png",
+                "https://cms.sholo.info/wp-content/uploads/2025/09/Sholo-July-ondormohol-small.png"
+            ],
+            title: "জুলাই অভ্যুত্থান সংখ্যা"
+        },
         {
             type: "magazine",
             SKU: "MAG-9",
             price: 50,
             images: [
                 "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-9.jpg",
-                "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-9.jpg"
             ],
             title: "৯ম সংখ্যা"
         },
@@ -168,7 +176,6 @@ export default function GetSholo(props: GetSholoProps) {
             price: 50,
             images: [
                 "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-8.jpg",
-                "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-8.jpg"
             ],
             title: "৮ম সংখ্যা"
         },
@@ -178,7 +185,6 @@ export default function GetSholo(props: GetSholoProps) {
             price: 350,
             images: [
                 "https://cms.sholo.info/wp-content/uploads/2025/07/Sholo-T-shirt.jpg",
-                "https://cms.sholo.info/wp-content/uploads/2025/07/Sholo-T-shirt.jpg"
             ],
             title: "টি-শার্ট"
         },
