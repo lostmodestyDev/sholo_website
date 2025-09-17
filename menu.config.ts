@@ -26,5 +26,9 @@ export const contentMenu = {
   writeForUs: {
     path: "contact",
     display: "ষোলোর জন্য লিখুন"
-  }
+  },
+  faq: {
+    path: "/faqs",
+    display: "যত প্রশ্ন",
+  },
 };
