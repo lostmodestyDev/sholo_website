@@ -1,4 +1,9 @@
+# *
 User-agent: *
 Allow: /
 
-Sitemap: https://your-domain.com/sitemap.xml
+# Host
+Host: https://www.sholo.org
+
+# Sitemaps
+Sitemap: https://www.sholo.org/sitemap.xml
