@@ -6,8 +6,6 @@ import { Analytics } from "@vercel/analytics/react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
-import { MobileNav } from "@/components/nav/mobile-nav";
 import { mainMenu, contentMenu } from "@/menu.config";
 import { Section, Container } from "@/components/craft";
 import Balancer from "react-wrap-balancer";
@@ -18,8 +16,7 @@ import "@/public/globals.css";
 import Logo from "@/public/logo.png";
 
 
-import { cn } from "@/lib/utils";
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 
 export const metadata: Metadata = {
   title: "ষোলো",
@@ -34,7 +31,7 @@ import type { AppProps } from 'next/app'
 import Head from "next/head";
 import { findPosts } from "@/lib/wordpress";
 import { Post } from "@/lib/wordpress.d";
-import { SearchIcon } from "lucide-react";
+import { Nav } from "@/components/nav/nav";
 
 
 export const SearchModal = ({ open, onClose }: { open: boolean, onClose: () => void }) => {
@@ -136,7 +133,7 @@ export default function App({ Component, pageProps }: AppProps) {
         defaultTheme="light"
         disableTransitionOnChange
       >
-        <Nav />
+        <Nav/>
         <main>
           <Component {...pageProps} />
           <GoogleAnalytics gaId="G-JKJ6YFE2VZ" />
@@ -148,68 +145,6 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 }
 
-const Nav = ({ className, children, id }: NavProps) => {
-
-  const [open, setOpen] = useState(false);
-
-  return (
-    <nav
-      className={cn(
-        "sticky z-50 top-0 bg-background",
-        "border-b",
-        "fade-in",
-        className,
-      )}
-      id={id}
-    >
-      <div
-        id="nav-container"
-        className="max-w-5xl mx-auto py-4 px-6 sm:px-8 flex justify-between items-center"
-      >
-        <Link
-          className="hover:opacity-75 transition-all flex gap-2 items-center"
-          href="/"
-        >
-          <h2 className="sr-only">Sholo</h2>
-          <Image
-            src={Logo}
-            alt="Logo"
-            width={84}
-            height={30.54}
-          ></Image>
-        </Link>
-        {children}
-        <div className="flex items-center gap-2">
-
-          <div className="mx-2 hidden md:flex">
-            {Object.entries(mainMenu).map(([key, item]) => (
-              <Button key={item.path} asChild variant="ghost" size="sm">
-                <Link href={item.path}>
-                  {item.display}
-                </Link>
-              </Button>
-            ))}
-
-            <button
-              onClick={() => {
-                setOpen(true);
-              }}
-              className="p-2 rounded-full cursor-pointer text-neutral-700 hover:bg-neutral-100"
-            >
-              <SearchIcon />
-              <span className="sr-only">search</span>
-            </button>
-            <SearchModal open={open} onClose={() => setOpen(false)} />
-          </div>
-          <Button asChild className="hidden sm:flex">
-            <Link href="/get-sholo">ষোলো কিনুন</Link>
-          </Button>
-          <MobileNav title={metadata.title?.toString()} setSearchOpen={setOpen} />
-        </div>
-      </div>
-    </nav>
-  );
-};
 
 const Footer = () => {
   return (

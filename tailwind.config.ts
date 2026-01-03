@@ -31,13 +31,15 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          0: "#f8f4d9",
-          DEFAULT: "#f27042",
+          0: "#FFF8F8",
+          DEFAULT: "#EB5E2C",
           foreground: "hsl(var(--primary-foreground))",
-          7: "#96003a"
+          7: "#D64A16"
         },
         secondary: {
-          DEFAULT: "#1a6044",
+          DEFAULT: "#1C4E32",
+          8: "#11301F",
+          9: "#06120C",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
@@ -75,10 +77,21 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "change": {
+          "0%": { transform: "translateY(0%)" },
+          "22%": { transform: "translateY(-125%)" },
+          "25%": { transform: "translateY(-125%)" },
+          "43%": { transform: "translateY(-250%)" },
+          "50%": { transform: "translateY(-250%)" },
+          "74%": { transform: "translateY(-380%)" },
+          "75%": { transform: "translateY(-380%)" },
+          "100%": { transform: "translateY(0%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "change": "change 8s cubic-bezier( 0.94, 0, 0.58, 1) infinite",
       },
     },
   },

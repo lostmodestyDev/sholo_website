@@ -18,12 +18,12 @@ export default function PostCard({ post }: { post: Post }) {
     <Link
       href={`/${post.slug}`}
       className={cn(
-        "border p-4 bg-accent/30 rounded-lg group flex justify-between flex-col not-prose gap-8",
-        "hover:bg-accent/75 transition-all"
+        "border-2 p-4 border-primary rounded-xl group flex justify-between flex-col not-prose gap-8",
+        "hover:bg-primary-0 transition-all hover:border-primary-7"
       )}
     >
       <div className="flex flex-col gap-4">
-        {hasFeaturedImage && <div className="h-48 w-full overflow-hidden relative rounded-md border flex items-center justify-center">
+        {hasFeaturedImage && <div className="h-48 w-full overflow-hidden relative rounded-xl border flex items-center justify-center">
           <Image
             className="h-full w-full object-cover"
             src={post.featuredImage?.node.sourceUrl}
@@ -34,13 +34,13 @@ export default function PostCard({ post }: { post: Post }) {
         </div> }
         <div
           dangerouslySetInnerHTML={{ __html: post.title }}
-          className="text-xl text-primary font-medium group-hover:underline decoration-muted-foreground underline-offset-4 decoration-dotted transition-all"
+          className="text-2xl text-display font-medium decoration-muted-foreground underline-offset-4 decoration-dotted transition-all"
         ></div>
         <div
           className="text-sm"
           dangerouslySetInnerHTML={{
             __html:
-              post.excerpt.split(" ").slice(0, 12).join(" ").trim() +
+              post.excerpt.split(" ").slice(0, 20).join(" ").trim() +
               "...",
           }}
         ></div>

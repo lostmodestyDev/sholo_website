@@ -8,22 +8,106 @@ import Image from "next/image";
 import birds from "../public/birds.png";
 import cloud from "../public/cloud.png";
 import mountain from "../public/mountain.png";
+import blob1 from "../public/blob-1.svg";
+import blob2 from "../public/blob-2.svg";
+import blob3 from "../public/blob-3.svg";
+import quote from "../public/quote.svg";
 import { getApolloClient } from "@/lib/wordpress";
 import PostCard from "@/components/posts/post-card";
 import { Button } from "@/components/ui/button";
 
 import {
+  Category,
   Post,
 } from "../lib/wordpress.d";
 import { gql } from "@apollo/client";
 import Head from "next/head";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
+
+// Extracted constants
+type ImpactItem = {
+  id: string;
+  label: string;
+  sub: string;
+  image: any;
+};
+
+const IMPACT_ITEMS: ImpactItem[] = [
+  {
+    id: "impact-1",
+    label: "৫৪,৭৬০",
+    sub: "কপি বিক্রি",
+    image: blob1
+  },
+  {
+    id: "impact-2",
+    label: "৩০,০০০+",
+    sub: "পাঠক",
+    image: blob2
+  },
+  {
+    id: "impact-3",
+    label: "১৭৪",
+    sub: "পাঠচক্র",
+    image: blob3
+  },
+];
+
+type Testimonial = {
+  id: string;
+  title: string;
+  body: string;
+  quoteBy?: string;
+  rotateClass?: string;
+  translateYClass?: string;
+};
+
+const TESTIMONIALS: Testimonial[] = [
+  {
+    id: "t1",
+    title: "রিয়াদের ছোটবোনের জন্য পারফেক্ট গিফট",
+    body:
+      "ছোট বোনের জন্য নিয়ে নিলাম কিশোর ম্যাগাজিন 'ষোলো'📚\n\nআমি পড়ে দেখেছি ছোটদের জন্য খুবই উপকারী জিনিস এগুলা!\n\nআপনারাও আপনাদের ছোট ভাই-বোনদের উপহার দিতে পারেন। আমি মনে করি, বর্তমানে এরকম ম্যাগাজিন তাদের খুব প্রয়োজন!💯",
+    quoteBy: "- রিয়াদ হাসান প্রান্ত",
+    rotateClass: "-rotate-3",
+  },
+  {
+    id: "t2",
+    title: "মুকতার তার ফোন ব্যাবহার কমিয়ে দিয়েছে",
+    body:
+      "আপনাদের ম্যাগাজিন পড়ে আমার কত উপকার হইছে বলে বুঝাতে পারবো না। এক ছোট ভাইয়ের কাছ থেকে পেয়েছি।মোবাইল / সোস্যাল মিডিয়া থেকে দূরে থাকার কথা গুলো খুবই কার্যকরি। ...সারাদিন ফোন নিয়ে থাকতাম,ফেসবুকে মাইলের পর মাইল র্স্কোল করতাম।এখন আল্লাহর রহমতে কমে গেছে অনেক।ধন্যবাদ আপনাদের",
+    quoteBy: "- এম কে মুকতার - ডুয়েট ছাত্র",
+    rotateClass: "rotate-2",
+    translateYClass: "translate-y-4",
+  },
+  {
+    id: "t3",
+    title: "মুশফিকের মধ্য মুসলিম উম্মাহ'র প্রতি ভালোবাসা তৈরি হয়",
+    body:
+      "ষোলো থেকে পিচ্চিদের সালামি থেকে একটা পার্ট ফিলি**নের গা*য় পাঠানো যাচ্ছে। মুশফিক মাশরাফ ইন্সটা থেকে কয়েকটা রিলস দেখার পর এগ্লা দিতে রাজি হইছে। আল্লাহুম্মা বারিক।",
+    quoteBy: "-",
+    rotateClass: "-rotate-1",
+    translateYClass: "translate-y-2",
+  },
+  {
+    id: "t4",
+    title: "নষ্ট সমাজের থেকে বাচার অস্ত্র",
+    body:
+      "তোমাদের জীবনের এই গুরুত্বপূর্ণ সময়টাই তো সেক্যুলাররা কেড়ে নিয়ে তাদের ভাগাড়ে তোমাদের ভিড়িয়েছিল। তোমাদের ব্যস্ত রেখেছিল বস্তুবাদী সব ম্যাটেরিয়ালে। তোমাদের জান্নাতের রাস্তার সামনে তারা নির্মাণ করেছিল ফিতনার এক বিশাল প্রাচীর।",
+    quoteBy: "- আল মুরাবিত আল আমিন",
+    rotateClass: "rotate-3",
+    translateYClass: "translate-y-6",
+  },
+];
 
 // This page is using the craft.tsx component and design system
 export default function Home({
-  posts
+  posts,
+  categories
 }: {
   posts: Post[]
+  categories: Category[]
 }) {
 
   const LOAD_ONCE = 9;
@@ -31,49 +115,154 @@ export default function Home({
   const [loaded, setLoaded] = useState(LOAD_ONCE);
 
   const filteredPosts = posts.slice(0, loaded)
-  const totalPosts = posts.length;
 
-  const loadMore = () => {
-    setLoaded(loaded + LOAD_ONCE);
-  }
+  const HERO_TITLES = [
+    "হারিয়ে যাবার নয়",
+    "তৈরি করার",
+    "উদ্যমী হবার",
+    "সমাজের ভুল ভাঙ্গার",
+  ]
 
   return (
-    <Section>
+    <div>
       <Head>
-        <title>ষোলো: যে বয়স হারিয়ে যাবার নয়</title> 
+        <title>ষোলো: যে বয়স হারিয়ে যাবার নয়</title>
         <meta name="description" content="‘ষোলো’ হলো কিশোর-কিশোরী, তরুণ-তরুণীদের জন্য প্রকাশিত ম্যাগাজিন যার লক্ষ্য: কিশোর-কিশোরী ও তরুণ-তরুণীদের ইসলামী মূল্যবোধে দীক্ষিত করে সমাজের দায়িত্বশীল সদস্য হিসেবে গড়ে তোলা।" />
         <meta property="og:title" content="ষোলো: যে বয়স হারিয়ে যাবার নয়" />
         <meta property="og:description" content="‘ষোলো’ হলো কিশোর-কিশোরী, তরুণ-তরুণীদের জন্য প্রকাশিত ম্যাগাজিন যার লক্ষ্য: কিশোর-কিশোরী ও তরুণ-তরুণীদের ইসলামী মূল্যবোধে দীক্ষিত করে সমাজের দায়িত্বশীল সদস্য হিসেবে গড়ে তোলা।" />
       </Head>
-      <Container>
-
-        <article className="prose-m-none">
-          <div className="bg-gradient-to-b from-primary to-primary-7 w-full rounded-md relative md:py-16 mb-8 md:pl-16 py-8 pl-8">
-            <h1 className="font-display w-2/3 text-left p-2 mt-8 md:p-8 text-primary-0"><b>যে বয়স হারিয়ে <br/>যাবার নয়</b>
-            </h1>
-            <div className="flex p-2 md:p-8 gap-2 flex-col md:flex-row w-48 justify-items-start z-2 relative z-10">
-              <Button asChild className="sm:flex bg-primary-0 text-primary hover:text-primary-0 shadow-lg hover:shadow-2xl">
-                <Link href="/get-sholo"><b>ষোলো কিনুন</b></Link>
-              </Button>
-              <Button asChild className="sm:flex bg-primary-primary text-neutral-50">
-                <Link href="/about">আমাদের সম্পর্কে জানুন</Link>
-              </Button>
+      <div className="bg-gradient-to-b from-primary  to-primary-7 w-full relative md:py-36 mb-8 md:pl-16 py-16 pl-8">
+        <div className="max-w-5xl m-auto">
+          <h1 className="font-display text-left p-2 mt-8 md:p-8 text-primary-0 m-0">
+            <div className="h-20 flex box-content">
+              <p className="my-4 pr-4">যে বয়স</p>
+              <div className="overflow-y-hidden relative">{HERO_TITLES.map((text => <b key={text} className="block my-4 animate-change">{text}</b>))}</div>
             </div>
-            <Image src={cloud} alt="cloud" className="h-20 w-64 absolute -top-8 -left-16 z-0" />
-            <Image src={mountain} alt="mountain" className="h-40 w-48 absolute -bottom-3.5 right-0 z-1" />
-            <Image src={birds} alt="birds" className="h-40 w-48 absolute top-0 md:right-16 right-2 z-0" />
-            <Image src={cloud} alt="cloud" className="md:h-18 md:w-48 h-10 w-28 absolute top-20 md:-right-16 -right-2 z-0" />
-          </div>
-          {/* <p className="border border-secondary p-8 rounded-md font-display my-8">
-            কিশোর-কিশোরী, তরুণ-তরুণীরা হলো আমাদের সমাজের সবচেয়ে গুরুত্বপূর্ণ অংশ। কিন্তু তারা অবহেলার শিকার। তাদের নিষ্পাপ, সজীব প্রাণকে বিষাক্ত করার জন্য বিদ্যমান বিশ্ব কাঠামোর প্রতিটি উপাদান একযোগে কাজ করে যাচ্ছে।
-            এর বিপরীতে, তাদের (বিশেষ করে স্কুল-কলেজ-ভার্সিটি পড়ুয়াদের) সুস্থ-সুন্দরভাবে বেড়ে উঠার জন্য, এবং সমাজের দায়িত্ববান সদস্য হিসেবে গড়ে তোলার জন্য প্রয়োজনীয় উদ্যোগের বেশ অভাব।
-          </p> */}
+          </h1>
 
+          <p className="ml-1 p-2 md:p-8 md:py-0 max-w-xl text-neutral-50">
+            কিশোর-কিশোরী, তরুণ-তরুণীরা সুস্থ-সুন্দরভাবে বেড়ে উঠার জন্য, এবং সমাজের দায়িত্ববান সদস্য হিসেবে গড়ে তোলার জন্য উদ্যোগ।
+          </p>
+          <div className="flex p-2 md:p-8 gap-2 flex-col md:flex-row w-48 justify-items-start z-2 relative z-10">
+            <Button asChild className="sm:flex bg-secondary-8 hover:bg-secondary shadow-lg hover:shadow-2xl">
+              <Link href="/get-sholo"><b>ষোলো কিনুন</b></Link>
+            </Button>
+            <Button asChild className="sm:flex bg-primary-primary text-neutral-50">
+              <Link href="/about">আমাদের সম্পর্কে জানুন</Link>
+            </Button>
+          </div>
+          <Image src={cloud} alt="cloud" className="absolute -top-8 -left-16 z-0 md:h-1/4 md:w-1/3 opacity-50" />
+          <Image src={cloud} alt="cloud" className="md:h-1/6 md:w-1/4 absolute top-60 md:right-24 -right-2 z-0 opacity-50" />
+          <Image src={birds} alt="birds" className="h-48 w-64 absolute top-24 md:right-1/3 right-2 z-0" />
+        </div>
+      </div>
+
+      <Container>
+        <Section>
+          <div className="text-center">
+            <h2 className="font-display text-3xl">আমাদের অর্জন</h2>
+            <div className="flex justify-center gap-6 items-end flex-col md:flex-row">
+              {IMPACT_ITEMS.map((item) => (
+                <div
+                  key={item.id}
+                  role="img"
+                  aria-label={`${item.label} ${item.sub}`}
+                  style={{ backgroundImage: `url(${item.image.src})`, width: '200px', height: '200px' }}
+                  className={`text-white rounded-full flex flex-col items-center justify-center transform`}
+                >
+                  <span className="font-bold text-2xl leading-none">{item.label}</span>
+                  <span className="text-2xl leading-none">{item.sub}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Section>
+        <Section>
+          <div className="py-12">
+            {/* <h2 className="font-display text-3xl text-center mb-8">কথা ও অভিজ্ঞতা</h2> */}
+
+            <div className="relative">
+              <div className="-mx-36 flex gap-12 px-6 md:px-0 overflow-x-auto md:overflow-visible md:justify-center items-end">
+                {TESTIMONIALS.map((t) => (
+                  <div
+                    key={t.id}
+                    className={`flex-1 w-80 bg-white border-2 border-secondary-8 rounded-lg p-4 transform ${t.rotateClass ?? ""} ${t.translateYClass ?? ""}`}
+                    aria-labelledby={`${t.id}-title`}
+                  >
+                    <Image src={quote} alt="quote" className="h-8 w-8 mb-1 m-0" />
+                    <h3 id={`${t.id}-title`} className="font-display leading-none font-normal text-3xl mb-3 py-2 my-2">{t.title}</h3>
+                    <p className="text-sm leading-relaxed text-neutral-700 font-body">{t.body}</p>
+                    <p className="text-sm leading-relaxed text-neutral-700 font-body">{t.quoteBy}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        <Button className="w-full mx-auto h-40 bg-primary my-16 rounded-2xl border-b-8 border-primary-7 active:border-b-0 active:border-t-8 active:border-neutral-50 transition-none">
+          <Link href="/get-sholo" className="text-5xl font-display">
+            ষোলো কিনুন
+          </Link>
+        </Button>
+
+        <Section>
+          <h2 className="font-display text-2xl font-bold">আছে অনেক মজার মজার শিক্ষণীয় বিষয়</h2>
+          <div className="flex flex-wrap gap-2 my-8 ">
+            {categories.filter((c) => c.slug != "uncategorized").slice(0, 20).map((category) => (
+              <Link
+                key={category.slug}
+                href={`/category/${category.slug}`}
+                className="inline-block px-4 py-2 rounded-lg border border-primary hover:bg-primary-0 transition"
+              >
+                {category.name}
+              </Link>
+            ))}
+            <Link
+              href={`/read`}
+              className="inline-block px-4 py-2 rounded-lg border text-neutral-50 bg-primary hover:bg-primary-7 transition"
+            >
+              All
+            </Link>
+          </div>
           {filteredPosts.length > 0 ? (
             <div className="grid md:grid-cols-3 gap-4 z-0">
               {filteredPosts.map((post: any) => (
                 <PostCard key={post.id} post={post} />
               ))}
+              <Link
+                href={`/contact`}
+                className={cn(
+                  "border-dashed border-4 p-4 border-primary rounded-xl group flex justify-between flex-col not-prose gap-8",
+                  "hover:bg-primary-0 transition-all hover:border-primary-7"
+                )}
+              >
+                <div className="flex flex-col gap-4">
+                  <div className="h-48 w-full overflow-hidden relative rounded-xl border flex items-center justify-center">
+                    <Image
+                      className="h-full w-full object-cover"
+                      src="https://cms.sholo.info/wp-content/uploads/2024/01/likte.png"
+                      alt="Write for Us"
+                      width={400}
+                      height={200}
+                    />
+                  </div>
+                  <div
+                    className="text-2xl text-display font-medium decoration-muted-foreground underline-offset-4 decoration-dotted transition-all"
+                  >Write for Us</div>
+                  <div
+                    className="text-sm"
+                  >Do you have a passion fwe welcome your submissions. Join us in inspiring and educating young minds through your words.</div>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                  <hr />
+                  <div className="flex justify-between items-center text-xs">
+                    <p></p>
+                    <p>TODAY</p>
+                  </div>
+                </div>
+              </Link>
             </div>
           ) : (
             <div className="h-24 w-full border rounded-lg bg-accent/25 flex items-center justify-center">
@@ -81,18 +270,33 @@ export default function Home({
             </div>
           )}
 
-          <div className="mt-8 not-prose">
-            <Button variant={totalPosts >= loaded ? "outline" : "ghost"} disabled={totalPosts < loaded} onClick={loadMore}>Load More</Button>
-          </div>
-        </article>
+        </Section>
+        <Section>
+          <h2 className="font-display text-2xl font-bold">আছে অনেক মজার মজার শিক্ষণীয় বিষয়</h2>
+
+
+        </Section>
       </Container>
-    </Section>
+    </div>
   );
 }
 
 
 export async function getStaticProps() {
   const apolloClient = getApolloClient();
+
+  const { data: categoryData } = await apolloClient.query({
+    query: gql`
+      query GetAllCategories {
+        categories(first: 1000) {
+          nodes {
+            name
+            slug
+          }
+        }
+      }
+    `,
+  });
 
   const data = await apolloClient.query({
     query: gql`
@@ -101,7 +305,7 @@ export async function getStaticProps() {
           title
           description
         }
-        posts(first: 10000) {
+        posts(first: 2) {
           edges {
             node {
               id
@@ -126,10 +330,10 @@ export async function getStaticProps() {
     `,
   });
 
-  const posts = data?.data.posts.edges.map(({ node } : {node: any}) => node).map((post : any) => {
+  const posts = data?.data.posts.edges.map(({ node }: { node: any }) => node).map((post: any) => {
     return {
       ...post,
-      path: `/posts/${post.slug}`
+      path: `/${post.slug}`
     }
   });
 
@@ -140,7 +344,8 @@ export async function getStaticProps() {
   return {
     props: {
       page,
-      posts
+      posts,
+      categories: categoryData.categories.nodes,
     }
   }
 }

@@ -151,7 +151,17 @@ export default function GetSholo(props: GetSholoProps) {
     const [isProductImageModalOpen, setProductImageModalOpen] = useState(false)
     const [product, setProduct] = useState<{ images: string[], title: string }>({ images: [], title: "" })
 
-    const products = [{
+    const products = [
+        {
+            type: "magazine",
+            SKU: "MAG-10",
+            price: 50,
+            images: [
+                "https://cms.sholo.info/wp-content/uploads/2026/01/Sholo-10-Cover.jpg",
+            ],
+            title: "১০ম সংখ্যা"
+        },
+        {
             type: "magazine",
             SKU: "MAG-9",
             price: 60,
@@ -160,24 +170,6 @@ export default function GetSholo(props: GetSholoProps) {
                 "https://cms.sholo.info/wp-content/uploads/2025/09/Sholo-July-ondormohol-small.png"
             ],
             title: "জুলাই অভ্যুত্থান সংখ্যা"
-        },
-        {
-            type: "magazine",
-            SKU: "MAG-9",
-            price: 50,
-            images: [
-                "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-9.jpg",
-            ],
-            title: "৯ম সংখ্যা"
-        },
-        {
-            type: "magazine",
-            SKU: "MAG-8",
-            price: 50,
-            images: [
-                "https://cms.sholo.info/wp-content/uploads/2025/07/sholo-8.jpg",
-            ],
-            title: "৮ম সংখ্যা"
         },
         {
             type: "tshirt",
