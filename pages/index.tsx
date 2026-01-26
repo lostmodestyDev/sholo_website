@@ -11,6 +11,12 @@ import mountain from "../public/mountain.png";
 import blob1 from "../public/blob-1.svg";
 import blob2 from "../public/blob-2.svg";
 import blob3 from "../public/blob-3.svg";
+import image1 from "../public/image 1.png";
+import image2 from "../public/image 2.png";
+import image3 from "../public/image 3.png";
+import image4 from "../public/image 4.png";
+import image5 from "../public/image 5.png";
+import image6 from "../public/image 6.png";
 import quote from "../public/quote.svg";
 import { getApolloClient } from "@/lib/wordpress";
 import PostCard from "@/components/posts/post-card";
@@ -22,7 +28,7 @@ import {
 } from "../lib/wordpress.d";
 import { gql } from "@apollo/client";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 // Extracted constants
@@ -100,6 +106,68 @@ const TESTIMONIALS: Testimonial[] = [
     translateYClass: "translate-y-6",
   },
 ];
+import React from 'react';
+
+const MasonryGallery = () => {
+  // Sample images - replace with your actual image data
+  const images = [
+    {
+      id: 1,
+      src: image1,
+      alt: 'Classroom session',
+      span: 'row-span-2 col-span-2'
+    },
+    {
+      id: 2,
+      src: image2,
+      alt: 'Outdoor gathering',
+      span: 'row-span-1'
+    },
+    {
+      id: 4,
+      src: image4,
+      alt: 'Students studying',
+      span: 'row-span-2 col-span-2'
+    },
+    {
+      id: 6,
+      src: image6,
+      alt: 'Resources display',
+      span: 'row-span-1'
+    },
+    {
+      id: 5,
+      src: image5,
+      alt: 'Group assembly',
+      span: 'row-span-1'
+    },
+    {
+      id: 3,
+      src: image3,
+      alt: 'Teaching moment',
+      span: 'row-span-1'
+    },
+  ];
+
+  return (
+    <div className="w-full mx-auto p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
+        {images.map((image) => (
+          <div
+            key={image.id}
+            className={`${image.span} overflow-hidden rounded-lg shadow-lg hover:scale-[1.02] transition-transform duration-300`}
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 // This page is using the craft.tsx component and design system
 export default function Home({
@@ -116,11 +184,21 @@ export default function Home({
 
   const filteredPosts = posts.slice(0, loaded)
 
+  const [heroTitleIndex, setHeroTitleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroTitleIndex((prev) => (prev + 1) % HERO_TITLES.length)
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, [])
+
   const HERO_TITLES = [
-    "হারিয়ে যাবার নয়",
     "তৈরি করার",
     "উদ্যমী হবার",
     "সমাজের ভুল ভাঙ্গার",
+    "হারিয়ে যাবার নয়",
   ]
 
   return (
@@ -131,12 +209,15 @@ export default function Home({
         <meta property="og:title" content="ষোলো: যে বয়স হারিয়ে যাবার নয়" />
         <meta property="og:description" content="‘ষোলো’ হলো কিশোর-কিশোরী, তরুণ-তরুণীদের জন্য প্রকাশিত ম্যাগাজিন যার লক্ষ্য: কিশোর-কিশোরী ও তরুণ-তরুণীদের ইসলামী মূল্যবোধে দীক্ষিত করে সমাজের দায়িত্বশীল সদস্য হিসেবে গড়ে তোলা।" />
       </Head>
-      <div className="bg-gradient-to-b from-primary  to-primary-7 w-full relative md:py-36 mb-8 md:pl-16 py-16 pl-8">
+      <div className="bg-gradient-to-b from-primary to-primary-7 w-full relative md:py-36 mb-8 md:pl-16 py-16 pl-8">
         <div className="max-w-5xl m-auto">
-          <h1 className="font-display text-left p-2 mt-8 md:p-8 text-primary-0 m-0">
-            <div className="h-20 flex box-content">
-              <p className="my-4 pr-4">যে বয়স</p>
-              <div className="overflow-y-hidden relative">{HERO_TITLES.map((text => <b key={text} className="block my-4 animate-change">{text}</b>))}</div>
+          <h1 className="font-display text-left p-2 mt-8 md:p-8 text-primary-0 m-0 align-middle">
+            <div className="md:h-20 h-12 flex box-content py-4 leading-loose align-middle">
+              <p className="pr-4">যে বয়স</p>
+              {/* <div className="overflow-y-hidden relative">{HERO_TITLES.map((text => <b key={text} className="block animate-change">{text}</b>))}</div> */}
+              <div className="inline-block">
+                {HERO_TITLES[heroTitleIndex].split(" ").map((text, idx) => <b key={text} className="fade-in">{text} </b>)}
+              </div>
             </div>
           </h1>
 
@@ -152,8 +233,8 @@ export default function Home({
             </Button>
           </div>
           <Image src={cloud} alt="cloud" className="absolute -top-8 -left-16 z-0 md:h-1/4 md:w-1/3 opacity-50" />
-          <Image src={cloud} alt="cloud" className="md:h-1/6 md:w-1/4 absolute top-60 md:right-24 -right-2 z-0 opacity-50" />
-          <Image src={birds} alt="birds" className="h-48 w-64 absolute top-24 md:right-1/3 right-2 z-0" />
+          <Image src={cloud} alt="cloud" className="md:h-1/6 md:w-1/4 absolute top-60 md:right-24 -right-2 z-0 hidden md:visible" />
+          <Image src={birds} alt="birds" className="h-48 w-64 absolute top-24 md:right-1/3 right-2 z-0 opacity-50" />
         </div>
       </div>
 
@@ -161,7 +242,7 @@ export default function Home({
         <Section>
           <div className="text-center">
             <h2 className="font-display text-3xl">আমাদের অর্জন</h2>
-            <div className="flex justify-center gap-6 items-end flex-col md:flex-row">
+            <div className="flex justify-center md:gap-6 items-center flex-col md:flex-row">
               {IMPACT_ITEMS.map((item) => (
                 <div
                   key={item.id}
@@ -182,7 +263,7 @@ export default function Home({
             {/* <h2 className="font-display text-3xl text-center mb-8">কথা ও অভিজ্ঞতা</h2> */}
 
             <div className="relative">
-              <div className="-mx-36 flex gap-12 px-6 md:px-0 overflow-x-auto md:overflow-visible md:justify-center items-end">
+              <div className="md:-mx-36 md:flex gap-12 px-6 md:px-0 md:overflow-x-auto md:overflow-visible md:justify-center items-end">
                 {TESTIMONIALS.map((t) => (
                   <div
                     key={t.id}
@@ -272,8 +353,9 @@ export default function Home({
 
         </Section>
         <Section>
-          <h2 className="font-display text-2xl font-bold">আছে অনেক মজার মজার শিক্ষণীয় বিষয়</h2>
+          <h2 className="font-display text-2xl font-bold"></h2>
 
+          <MasonryGallery />
 
         </Section>
       </Container>
