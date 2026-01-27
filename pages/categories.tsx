@@ -7,14 +7,17 @@ import { gql } from "@apollo/client";
 import { Category } from "@/lib/wordpress.d";
 import Head from "next/head";
 
-// export async function generateMetadata(): Promise<Metadata> {
-//   return {
-//     title: "All Categories",
-//     description: "Browse all categories on the site.",
-//   };
-// }
 
 export default function Page({ categories }: { categories: Category[] }) {
+
+  const categoriesWithCount = categories.map( category => {
+    const result = {
+      name: category.name,
+      slug: category.slug,
+      totalPosts: category.posts.nodes.length
+    }
+    return result;
+  }).filter(a => a.totalPosts > 0).sort((a,b) => b.totalPosts - a.totalPosts);
 
   return (
     <Section>
@@ -23,12 +26,16 @@ export default function Page({ categories }: { categories: Category[] }) {
       </Head>
       <Container>
         <BackButton />
-        <h2>All Categories</h2>
-        <div className="grid">
-          {categories.filter(c => c.name != "Uncategorized").map((category: any) => (
-            <Link key={category.slug} href={`/category/${category.slug}`}>
-              {category.name}
-            </Link>
+        <h2>সব বিষয়</h2>
+        <div className="flex gap-4 flex-auto max-w-full flex-wrap">
+          {categoriesWithCount.filter(c => c.name != "Uncategorized").map((category: any) => (
+            <Link
+                key={category.slug}
+                href={`/category/${category.slug}`}
+                className="px-4 py-2 rounded-lg border border-primary hover:bg-primary-7 hover:text-white transition"
+              >
+                {category.name} - {category.totalPosts}
+              </Link>
           ))}
         </div>
       </Container>
@@ -48,6 +55,11 @@ export async function getStaticProps() {
           nodes {
             name
             slug
+            posts(first: 1000) {
+              nodes {
+                id
+              }
+            }
           }
         }
       }

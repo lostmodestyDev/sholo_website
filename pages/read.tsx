@@ -1,29 +1,25 @@
 // Craft Imports
 import { Section, Container } from "@/components/craft";
-import Balancer from "react-wrap-balancer";
-
-import Link from "next/link";
-import Image from "next/image";
-
-import birds from "../public/birds.png";
-import cloud from "../public/cloud.png";
-import mountain from "../public/mountain.png";
 import { getApolloClient } from "@/lib/wordpress";
 import PostCard from "@/components/posts/post-card";
 import { Button } from "@/components/ui/button";
 
 import {
+  Category,
   Post,
 } from "../lib/wordpress.d";
 import { gql } from "@apollo/client";
 import Head from "next/head";
 import { useState } from "react";
+import Link from "next/link";
 
 // This page is using the craft.tsx component and design system
-export default function Home({
-  posts
+export default function Read({
+  posts,
+  categories
 }: {
   posts: Post[]
+  categories: Category[]
 }) {
 
   const LOAD_ONCE = 9;
@@ -37,6 +33,8 @@ export default function Home({
     setLoaded(loaded + LOAD_ONCE);
   }
 
+  console.log(categories);
+
   return (
     <div>
       <Head>
@@ -48,6 +46,23 @@ export default function Home({
 
       <Container>
         <Section>
+          <div className="flex flex-wrap gap-2 my-8 ">
+            {categories.filter((c) => c.slug != "uncategorized").slice(0, 20).map((category) => (
+              <Link
+                key={category.slug}
+                href={`/category/${category.slug}`}
+                className="px-4 py-2 rounded-lg border border-primary hover:bg-primary-7 hover:text-white transition"
+              >
+                {category.name}
+              </Link>
+            ))}
+            <Link
+              href={`/categories`}
+              className="inline-block px-4 py-2 rounded-lg border text-neutral-50 bg-primary hover:bg-primary-7 transition"
+            >
+              সব বিষয়
+            </Link>
+          </div>
           {filteredPosts.length > 0 ? (
             <div className="grid md:grid-cols-3 gap-4 z-0">
               {filteredPosts.map((post: any) => (
@@ -72,6 +87,19 @@ export default function Home({
 
 export async function getStaticProps() {
   const apolloClient = getApolloClient();
+
+  const { data: categoryData } = await apolloClient.query({
+    query: gql`
+      query GetAllCategories {
+        categories(first: 1000) {
+          nodes {
+            name
+            slug
+          }
+        }
+      }
+    `,
+  });
 
   const data = await apolloClient.query({
     query: gql`
@@ -110,7 +138,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      posts
+      posts,
+      categories: categoryData.categories.nodes,
     }
   }
 }

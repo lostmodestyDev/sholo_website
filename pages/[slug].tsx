@@ -46,14 +46,14 @@ export default function Page({ post, site, type }: { post: Post, site: Object, t
     day: "numeric",
     year: "numeric",
   });
-  const category = post.categories ? post.categories.nodes[0] : null;
+  const categories = post.categories;
 
   const contentWithTargetBlank = post.content
-  ? post.content.replace(
+    ? post.content.replace(
       /<a\s(?![^>]*\btarget=)[^>]*href=/gi,
       '<a target="_blank" rel="noopener noreferrer" href='
     )
-  : "";
+    : "";
 
   return (
     <Section>
@@ -94,19 +94,22 @@ export default function Page({ post, site, type }: { post: Post, site: Object, t
                 </Link>
               )}
             </p>
-            {category && <Link
-              href={`/category/${category.slug}`}
-              className={cn(badgeVariants({ variant: "outline" }), "not-prose")}
-            >
-              {category.name}
-            </Link>}
+            {categories.nodes.map(category =>
+              <Link
+                key={category.slug}
+                href={`/category/${category.slug}`}
+                className="inline-block px-4 py-2 text-sm rounded-lg border border-primary hover:bg-primary-7 hover:text-white transition mr-2"
+              >
+                {category.name}
+              </Link>
+            )}
           </div>
           </div>
         }
         <Article dangerouslySetInnerHTML={{ __html: contentWithTargetBlank }} />
 
-        <SocialShare url={`https://sholo.org/${post.slug}`}/>
-        
+        <SocialShare url={`https://sholo.org/${post.slug}`} />
+
       </Container>
     </Section>
   );

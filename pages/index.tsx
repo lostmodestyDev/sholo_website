@@ -248,7 +248,7 @@ export default function Home({
                   key={item.id}
                   role="img"
                   aria-label={`${item.label} ${item.sub}`}
-                  style={{ backgroundImage: `url(${item.image.src})`, width: '200px', height: '200px' }}
+                  style={{ backgroundImage: `url(${item.image.src})`, width: '300px', height: '300px' }}
                   className={`text-white rounded-full flex flex-col items-center justify-center transform`}
                 >
                   <span className="font-bold text-2xl leading-none">{item.label}</span>
@@ -262,8 +262,8 @@ export default function Home({
           <div className="py-12">
             {/* <h2 className="font-display text-3xl text-center mb-8">কথা ও অভিজ্ঞতা</h2> */}
 
-            <div className="relative">
-              <div className="md:-mx-36 md:flex gap-12 px-6 md:px-0 md:overflow-x-auto md:overflow-visible md:justify-center items-end">
+            <div className="relative md:overflow-visible">
+              <div className="md:-mx-36 md:flex gap-12 px-6 md:px-0 md:overflow-visible md:justify-center items-end">
                 {TESTIMONIALS.map((t) => (
                   <div
                     key={t.id}
@@ -282,7 +282,7 @@ export default function Home({
         </Section>
 
         <Button className="w-full mx-auto h-40 bg-primary my-16 rounded-2xl border-b-8 border-primary-7 active:border-b-0 active:border-t-8 active:border-neutral-50 transition-none">
-          <Link href="/get-sholo" className="text-5xl font-display">
+          <Link href="/get-sholo" className="text-5xl font-display w-full">
             ষোলো কিনুন
           </Link>
         </Button>
@@ -294,17 +294,17 @@ export default function Home({
               <Link
                 key={category.slug}
                 href={`/category/${category.slug}`}
-                className="inline-block px-4 py-2 rounded-lg border border-primary hover:bg-primary-0 transition"
+                className="inline-block px-4 py-2 rounded-lg border border-primary hover:bg-primary-7 hover:text-white transition"
               >
                 {category.name}
               </Link>
-            ))}
-            <Link
-              href={`/read`}
-              className="inline-block px-4 py-2 rounded-lg border text-neutral-50 bg-primary hover:bg-primary-7 transition"
-            >
-              All
-            </Link>
+              ))}
+              <Link
+                href={`/read`}
+                className="inline-block px-4 py-2 rounded-lg border text-neutral-50 bg-primary hover:bg-primary-7 transition"
+              >
+                সব লিখা
+              </Link>
           </div>
           {filteredPosts.length > 0 ? (
             <div className="grid md:grid-cols-3 gap-4 z-0">
@@ -323,17 +323,17 @@ export default function Home({
                     <Image
                       className="h-full w-full object-cover"
                       src="https://cms.sholo.info/wp-content/uploads/2024/01/likte.png"
-                      alt="Write for Us"
+                      alt="Write for Sholo"
                       width={400}
                       height={200}
                     />
                   </div>
                   <div
                     className="text-2xl text-display font-medium decoration-muted-foreground underline-offset-4 decoration-dotted transition-all"
-                  >Write for Us</div>
+                  >তোমার লিখা ষোলোতে দেখতে চাও?</div>
                   <div
                     className="text-sm"
-                  >Do you have a passion fwe welcome your submissions. Join us in inspiring and educating young minds through your words.</div>
+                  >তোমার কি লেখালেখি করতে ভালো লাগে? তোমার লিখা আমাদের কাছে পাঠিয়ে দাও এবং পৌঁছে যাও হাজারও কিশোর-তরুণদের কাছে</div>
                 </div>
 
                 <div className="flex flex-col gap-4">

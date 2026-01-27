@@ -24,7 +24,7 @@ export default function Page( { authors } : {authors: Author[]}) {
       </Head>
       <Container>
         <BackButton />
-        <h2>All Authors</h2>
+        <h2>সব লেখক লেখিকা</h2>
         <div className="grid">
           {authorsWithCount.map((author: any) => (
             <Link key={author.slug} href={`/author/${author.slug}`}>
@@ -48,7 +48,7 @@ export async function getStaticProps() {
           nodes {
             name
             slug
-            posts {
+            posts(first: 1000) {
               nodes {
                 id
               }

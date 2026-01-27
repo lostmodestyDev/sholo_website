@@ -61,6 +61,9 @@ export type Category = {
   taxonomy: "category";
   parent: number;
   meta: any[];
+  posts: {
+    nodes: Post[];
+  }
 };
 
 export type Tag = {

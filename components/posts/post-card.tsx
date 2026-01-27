@@ -11,7 +11,7 @@ export default function PostCard({ post }: { post: Post }) {
     day: "numeric",
     year: "numeric",
   });
-  const category = post.categories.nodes[0];
+  const categories = post.categories;
   const hasFeaturedImage = post.featuredImage != null;
 
   return (
@@ -49,7 +49,7 @@ export default function PostCard({ post }: { post: Post }) {
       <div className="flex flex-col gap-4">
         <hr />
         <div className="flex justify-between items-center text-xs">
-          <p>{category.name}</p>
+          <p>{categories.nodes.map( category => category.name).join(", ") }</p>
           <p>{date}</p>
         </div>
       </div>
