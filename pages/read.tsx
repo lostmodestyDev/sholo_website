@@ -33,8 +33,6 @@ export default function Read({
     setLoaded(loaded + LOAD_ONCE);
   }
 
-  console.log(categories);
-
   return (
     <div>
       <Head>
