@@ -252,20 +252,15 @@ export default function Home({
 
               {/* Stats row */}
               <div className="flex gap-8 mt-10 text-white/90">
-                <div>
-                  <div className="text-2xl md:text-3xl font-bold">৫৪,৭৬০+</div>
-                  <div className="text-sm opacity-75">কপি বিক্রি</div>
-                </div>
-                <div className="w-px bg-white/30"></div>
-                <div>
-                  <div className="text-2xl md:text-3xl font-bold">৩০,০০০+</div>
-                  <div className="text-sm opacity-75">পাঠক</div>
-                </div>
-                <div className="w-px bg-white/30"></div>
-                <div>
-                  <div className="text-2xl md:text-3xl font-bold">১৭৪</div>
-                  <div className="text-sm opacity-75">পাঠচক্র</div>
-                </div>
+                {IMPACT_ITEMS.map((item, idx) => (
+                  <React.Fragment key={item.id}>
+                    {idx > 0 && <div className="w-px bg-white/30"></div>}
+                    <div>
+                      <div className="text-2xl md:text-3xl font-bold">{item.label}</div>
+                      <div className="text-sm opacity-75">{item.sub}</div>
+                    </div>
+                  </React.Fragment>
+                ))}
               </div>
             </div>
 
