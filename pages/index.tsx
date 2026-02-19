@@ -209,55 +209,89 @@ export default function Home({
         <meta property="og:title" content="ষোলো: যে বয়স হারিয়ে যাবার নয়" />
         <meta property="og:description" content="‘ষোলো’ হলো কিশোর-কিশোরী, তরুণ-তরুণীদের জন্য প্রকাশিত ম্যাগাজিন যার লক্ষ্য: কিশোর-কিশোরী ও তরুণ-তরুণীদের ইসলামী মূল্যবোধে দীক্ষিত করে সমাজের দায়িত্বশীল সদস্য হিসেবে গড়ে তোলা।" />
       </Head>
-      <div className="bg-gradient-to-b from-primary to-primary-7 w-full relative md:py-36 mb-8 md:pl-16 py-16 pl-8">
-        <div className="max-w-5xl m-auto">
-          <h1 className="font-display text-left p-2 mt-8 md:p-8 text-primary-0 m-0 align-middle">
-            <div className="md:h-20 h-12 flex box-content py-4 leading-loose align-middle">
-              <p className="pr-4">যে বয়স</p>
-              {/* <div className="overflow-y-hidden relative">{HERO_TITLES.map((text => <b key={text} className="block animate-change">{text}</b>))}</div> */}
-              <div className="inline-block">
-                {HERO_TITLES[heroTitleIndex].split(" ").map((text, idx) => <b key={text} className="fade-in">{text} </b>)}
+      <div className="bg-gradient-to-br from-primary via-primary-7 to-primary w-full relative overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary rounded-full blur-3xl"></div>
+        </div>
+        
+        <Image src={cloud} alt="cloud" className="absolute -top-8 -left-16 z-0 md:h-1/4 md:w-1/3 opacity-30 animate-[float_6s_ease-in-out_infinite]" />
+        <Image src={cloud} alt="cloud" className="md:h-1/6 md:w-1/4 absolute top-60 md:right-24 -right-2 z-0 opacity-20 hidden md:block animate-[float_8s_ease-in-out_infinite]" />
+        <Image src={birds} alt="birds" className="h-48 w-64 absolute top-24 md:right-1/4 right-2 z-0 opacity-40 animate-[float_4s_ease-in-out_infinite]" />
+
+        <div className="max-w-6xl mx-auto px-6 md:px-16 py-20 md:py-32 relative z-10">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left content */}
+            <div>
+              <h1 className="font-display text-left text-primary-0 m-0 text-4xl md:text-6xl leading-tight">
+                <span className="block mb-2">যে বয়স</span>
+                <span className="block min-h-[1.2em] text-secondary-2">
+                  {HERO_TITLES[heroTitleIndex].split(" ").map((text, idx) => (
+                    <b key={`${heroTitleIndex}-${idx}`} className="inline-block animate-[fadeInUp_0.5s_ease-out_forwards] mr-3" style={{ animationDelay: `${idx * 0.1}s` }}>
+                      {text}
+                    </b>
+                  ))}
+                </span>
+              </h1>
+
+              <p className="mt-6 text-lg md:text-xl text-white/90 max-w-lg leading-relaxed">
+                কিশোর-কিশোরী, তরুণ-তরুণীরা সুস্থ-সুন্দরভাবে বেড়ে উঠার জন্য, এবং সমাজের দায়িত্ববান সদস্য হিসেবে গড়ে তোলার জন্য উদ্যোগ।
+              </p>
+
+              <div className="flex mt-8 gap-4 flex-col sm:flex-row">
+                <Button asChild size="lg" className="bg-secondary-8 hover:bg-secondary shadow-lg hover:shadow-2xl hover:scale-105 transition-all text-lg px-8 py-6">
+                  <Link href="/subscribe">
+                    <b>সাবস্ক্রাইব করুন</b>
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="bg-white/10 border-white/30 text-white hover:bg-white/20 text-lg px-8 py-6">
+                  <Link href="/about">আমাদের সম্পর্কে জানুন</Link>
+                </Button>
+              </div>
+
+              {/* Stats row */}
+              <div className="flex gap-8 mt-10 text-white/90">
+                <div>
+                  <div className="text-2xl md:text-3xl font-bold">৫৪,৭৬০+</div>
+                  <div className="text-sm opacity-75">কপি বিক্রি</div>
+                </div>
+                <div className="w-px bg-white/30"></div>
+                <div>
+                  <div className="text-2xl md:text-3xl font-bold">৩০,০০০+</div>
+                  <div className="text-sm opacity-75">পাঠক</div>
+                </div>
+                <div className="w-px bg-white/30"></div>
+                <div>
+                  <div className="text-2xl md:text-3xl font-bold">১৭৪</div>
+                  <div className="text-sm opacity-75">পাঠচক্র</div>
+                </div>
               </div>
             </div>
-          </h1>
 
-          <p className="ml-1 p-2 md:p-8 md:py-0 max-w-xl text-neutral-50">
-            কিশোর-কিশোরী, তরুণ-তরুণীরা সুস্থ-সুন্দরভাবে বেড়ে উঠার জন্য, এবং সমাজের দায়িত্ববান সদস্য হিসেবে গড়ে তোলার জন্য উদ্যোগ।
-          </p>
-          <div className="flex p-2 md:p-8 gap-2 flex-col md:flex-row w-48 justify-items-start z-2 relative z-10">
-            <Button asChild className="sm:flex bg-secondary-8 hover:bg-secondary shadow-lg hover:shadow-2xl">
-              <Link href="/get-sholo"><b>ষোলো কিনুন</b></Link>
-            </Button>
-            <Button asChild className="sm:flex bg-primary-primary text-neutral-50">
-              <Link href="/about">আমাদের সম্পর্কে জানুন</Link>
-            </Button>
+            {/* Right content - Magazine cover */}
+            <div className="hidden md:flex justify-center items-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-secondary/30 rounded-2xl blur-2xl transform rotate-6"></div>
+                <div className="relative bg-white p-3 rounded-2xl shadow-2xl transform hover:rotate-0 rotate-3 transition-transform duration-300">
+                  <Image
+                    src="https://cms.sholo.info/wp-content/uploads/2026/01/Sholo-10-Cover.jpg"
+                    alt="Sholo Magazine Cover"
+                    width={300}
+                    height={400}
+                    className="rounded-xl"
+                  />
+                  <div className="absolute -bottom-4 -right-4 bg-secondary-8 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                    নতুন সংখ্যা!
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <Image src={cloud} alt="cloud" className="absolute -top-8 -left-16 z-0 md:h-1/4 md:w-1/3 opacity-50" />
-          <Image src={cloud} alt="cloud" className="md:h-1/6 md:w-1/4 absolute top-60 md:right-24 -right-2 z-0 hidden md:visible" />
-          <Image src={birds} alt="birds" className="h-48 w-64 absolute top-24 md:right-1/3 right-2 z-0 opacity-50" />
         </div>
       </div>
 
       <Container>
-        <Section>
-          <div className="text-center">
-            <h2 className="font-display text-3xl">আমাদের অর্জন</h2>
-            <div className="flex justify-center md:gap-6 items-center flex-col md:flex-row">
-              {IMPACT_ITEMS.map((item) => (
-                <div
-                  key={item.id}
-                  role="img"
-                  aria-label={`${item.label} ${item.sub}`}
-                  style={{ backgroundImage: `url(${item.image.src})`, width: '300px', height: '300px' }}
-                  className={`text-white rounded-full flex flex-col items-center justify-center transform`}
-                >
-                  <span className="font-bold text-2xl leading-none">{item.label}</span>
-                  <span className="text-2xl leading-none">{item.sub}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Section>
         <Section>
           <div className="py-12">
             {/* <h2 className="font-display text-3xl text-center mb-8">কথা ও অভিজ্ঞতা</h2> */}
@@ -282,8 +316,8 @@ export default function Home({
         </Section>
 
         <Button className="w-full mx-auto h-40 bg-primary my-16 rounded-2xl border-b-8 border-primary-7 active:border-b-0 active:border-t-8 active:border-neutral-50 transition-none">
-          <Link href="/get-sholo" className="text-5xl font-display w-full">
-            ষোলো কিনুন
+          <Link href="/subscribe" className="text-5xl font-display w-full">
+            সাবস্ক্রাইব
           </Link>
         </Button>
 
