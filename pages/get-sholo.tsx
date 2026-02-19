@@ -197,6 +197,10 @@ export default function GetSholo(props: GetSholoProps) {
     return (
         <div className='max-w-5xl mx-auto py-4 px-6 sm:px-8'>
             <h1 className='mt-8 text-left'>প্রাপ্তিস্থান</h1>
+            <div className='bg-primary text-white p-4 rounded-lg mt-4 text-center'>
+                <p className='mb-2'>বার্ষিক সাবস্ক্রিপশন মাত্র ৪৯৯ টাকায় ৬ টি সংখ্যা ঘরে বসে পান!</p>
+                <a href='/subscribe' className='underline font-bold'>সাবস্ক্রাইব করুন &rarr;</a>
+            </div>
             <ProductImageModal
                 isOpen={isProductImageModalOpen}
                 onOpenChange={() => setProductImageModalOpen(false)}
