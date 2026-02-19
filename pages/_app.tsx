@@ -18,6 +18,13 @@ import Logo from "@/public/logo.png";
 
 import React, { useState } from 'react';
 
+// Banner configuration - easily changeable
+const BANNER_CONFIG = {
+  text: "বার্ষিক সাবস্ক্রিপশন মাত্র ৪৯৯ টাকা! সাবস্ক্রাইব করুন →",
+  link: "/subscribe",
+  enabled: true,
+};
+
 export const metadata: Metadata = {
   title: "ষোলো",
   description:
@@ -133,6 +140,14 @@ export default function App({ Component, pageProps }: AppProps) {
         defaultTheme="light"
         disableTransitionOnChange
       >
+        {BANNER_CONFIG.enabled && (
+          <Link
+            href={BANNER_CONFIG.link}
+            className="block bg-secondary-8 text-white text-center text-sm font-medium h-10 leading-10 hover:bg-secondary transition-colors"
+          >
+            {BANNER_CONFIG.text}
+          </Link>
+        )}
         <Nav/>
         <main>
           <Component {...pageProps} />
