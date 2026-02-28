@@ -21,6 +21,7 @@ import quote from "../public/quote.svg";
 import { getApolloClient } from "@/lib/wordpress";
 import PostCard from "@/components/posts/post-card";
 import { Button } from "@/components/ui/button";
+import { TestimonialsSection } from "@/components/ui/testimonials-section";
 
 import {
   Category,
@@ -60,54 +61,7 @@ const IMPACT_ITEMS: ImpactItem[] = [
   },
 ];
 
-type Testimonial = {
-  id: string;
-  title: string;
-  body: string;
-  quoteBy?: string;
-  rotateClass?: string;
-  translateYClass?: string;
-};
-
-const TESTIMONIALS: Testimonial[] = [
-  {
-    id: "t1",
-    title: "রিয়াদের ছোটবোনের জন্য পারফেক্ট গিফট",
-    body:
-      "ছোট বোনের জন্য নিয়ে নিলাম কিশোর ম্যাগাজিন 'ষোলো'📚\n\nআমি পড়ে দেখেছি ছোটদের জন্য খুবই উপকারী জিনিস এগুলা!\n\nআপনারাও আপনাদের ছোট ভাই-বোনদের উপহার দিতে পারেন। আমি মনে করি, বর্তমানে এরকম ম্যাগাজিন তাদের খুব প্রয়োজন!💯",
-    quoteBy: "- রিয়াদ হাসান প্রান্ত",
-    rotateClass: "-rotate-3",
-  },
-  {
-    id: "t2",
-    title: "মুকতার তার ফোন ব্যাবহার কমিয়ে দিয়েছে",
-    body:
-      "আপনাদের ম্যাগাজিন পড়ে আমার কত উপকার হইছে বলে বুঝাতে পারবো না। এক ছোট ভাইয়ের কাছ থেকে পেয়েছি।মোবাইল / সোস্যাল মিডিয়া থেকে দূরে থাকার কথা গুলো খুবই কার্যকরি। ...সারাদিন ফোন নিয়ে থাকতাম,ফেসবুকে মাইলের পর মাইল র্স্কোল করতাম।এখন আল্লাহর রহমতে কমে গেছে অনেক।ধন্যবাদ আপনাদের",
-    quoteBy: "- এম কে মুকতার - ডুয়েট ছাত্র",
-    rotateClass: "rotate-2",
-    translateYClass: "translate-y-4",
-  },
-  {
-    id: "t3",
-    title: "মুশফিকের মধ্য মুসলিম উম্মাহ'র প্রতি ভালোবাসা তৈরি হয়",
-    body:
-      "ষোলো থেকে পিচ্চিদের সালামি থেকে একটা পার্ট ফিলি**নের গা*য় পাঠানো যাচ্ছে। মুশফিক মাশরাফ ইন্সটা থেকে কয়েকটা রিলস দেখার পর এগ্লা দিতে রাজি হইছে। আল্লাহুম্মা বারিক।",
-    quoteBy: "-",
-    rotateClass: "-rotate-1",
-    translateYClass: "translate-y-2",
-  },
-  {
-    id: "t4",
-    title: "নষ্ট সমাজের থেকে বাচার অস্ত্র",
-    body:
-      "তোমাদের জীবনের এই গুরুত্বপূর্ণ সময়টাই তো সেক্যুলাররা কেড়ে নিয়ে তাদের ভাগাড়ে তোমাদের ভিড়িয়েছিল। তোমাদের ব্যস্ত রেখেছিল বস্তুবাদী সব ম্যাটেরিয়ালে। তোমাদের জান্নাতের রাস্তার সামনে তারা নির্মাণ করেছিল ফিতনার এক বিশাল প্রাচীর।",
-    quoteBy: "- আল মুরাবিত আল আমিন",
-    rotateClass: "rotate-3",
-    translateYClass: "translate-y-6",
-  },
-];
 import React from 'react';
-
 const MasonryGallery = () => {
   // Sample images - replace with your actual image data
   const images = [
@@ -217,7 +171,7 @@ export default function Home({
           <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-secondary rounded-full blur-3xl"></div>
         </div>
-        
+
         <Image src={cloud} alt="cloud" className="absolute -top-8 -left-16 z-0 md:h-1/4 md:w-1/3 opacity-30 animate-[float_6s_ease-in-out_infinite]" />
         <Image src={cloud} alt="cloud" className="md:h-1/6 md:w-1/4 absolute top-60 md:right-24 -right-2 z-0 opacity-20 hidden md:block animate-[float_8s_ease-in-out_infinite]" />
         <Image src={birds} alt="birds" className="h-48 w-64 absolute top-24 md:right-1/4 right-2 z-0 opacity-40 animate-[float_4s_ease-in-out_infinite]" />
@@ -289,106 +243,85 @@ export default function Home({
       </div>
 
       <Container>
-        <Section>
-          <div className="py-12">
-            {/* <h2 className="font-display text-3xl text-center mb-8">কথা ও অভিজ্ঞতা</h2> */}
+      <TestimonialsSection />
 
-            <div className="relative md:overflow-visible">
-              <div className="md:-mx-36 md:flex gap-12 px-6 md:px-0 md:overflow-visible md:justify-center items-end">
-                {TESTIMONIALS.map((t) => (
-                  <div
-                    key={t.id}
-                    className={`flex-1 w-80 bg-white border-2 border-secondary-8 rounded-lg p-4 transform ${t.rotateClass ?? ""} ${t.translateYClass ?? ""}`}
-                    aria-labelledby={`${t.id}-title`}
-                  >
-                    <Image src={quote} alt="quote" className="h-8 w-8 mb-1 m-0" />
-                    <h3 id={`${t.id}-title`} className="font-display leading-none font-normal text-3xl mb-3 py-2 my-2">{t.title}</h3>
-                    <p className="text-sm leading-relaxed text-neutral-700 font-body">{t.body}</p>
-                    <p className="text-sm leading-relaxed text-neutral-700 font-body">{t.quoteBy}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Section>
+      <Button className="w-full mx-auto h-40 bg-primary my-16 rounded-2xl border-b-8 border-primary-7 active:border-b-0 active:border-t-8 active:border-neutral-50 transition-none">
+        <Link href="/subscribe" className="text-5xl font-display w-full">
+          সাবস্ক্রাইব
+        </Link>
+      </Button>
 
-        <Button className="w-full mx-auto h-40 bg-primary my-16 rounded-2xl border-b-8 border-primary-7 active:border-b-0 active:border-t-8 active:border-neutral-50 transition-none">
-          <Link href="/subscribe" className="text-5xl font-display w-full">
-            সাবস্ক্রাইব
+      <Section>
+        <h2 className="font-display text-2xl font-bold">আছে অনেক মজার মজার শিক্ষণীয় বিষয়</h2>
+        <div className="flex flex-wrap gap-2 my-8 ">
+          {categories.filter((c) => c.slug != "uncategorized").slice(0, 20).map((category) => (
+            <Link
+              key={category.slug}
+              href={`/category/${category.slug}`}
+              className="inline-block px-4 py-2 rounded-lg border border-primary hover:bg-primary-7 hover:text-white transition"
+            >
+              {category.name}
+            </Link>
+          ))}
+          <Link
+            href={`/read`}
+            className="inline-block px-4 py-2 rounded-lg border text-neutral-50 bg-primary hover:bg-primary-7 transition"
+          >
+            সব লিখা
           </Link>
-        </Button>
+        </div>
+        {filteredPosts.length > 0 ? (
+          <div className="grid md:grid-cols-3 gap-4 z-0">
+            {filteredPosts.map((post: any) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+            <Link
+              href={`/contact`}
+              className={cn(
+                "border-dashed border-4 p-4 border-primary rounded-xl group flex justify-between flex-col not-prose gap-8",
+                "hover:bg-primary-0 transition-all hover:border-primary-7"
+              )}
+            >
+              <div className="flex flex-col gap-4">
+                <div className="h-48 w-full overflow-hidden relative rounded-xl border flex items-center justify-center">
+                  <Image
+                    className="h-full w-full object-cover"
+                    src="https://cms.sholo.info/wp-content/uploads/2024/01/likte.png"
+                    alt="Write for Sholo"
+                    width={400}
+                    height={200}
+                  />
+                </div>
+                <div
+                  className="text-2xl text-display font-medium decoration-muted-foreground underline-offset-4 decoration-dotted transition-all"
+                >তোমার লিখা ষোলোতে দেখতে চাও?</div>
+                <div
+                  className="text-sm"
+                >তোমার কি লেখালেখি করতে ভালো লাগে? তোমার লিখা আমাদের কাছে পাঠিয়ে দাও এবং পৌঁছে যাও হাজারও কিশোর-তরুণদের কাছে</div>
+              </div>
 
-        <Section>
-          <h2 className="font-display text-2xl font-bold">আছে অনেক মজার মজার শিক্ষণীয় বিষয়</h2>
-          <div className="flex flex-wrap gap-2 my-8 ">
-            {categories.filter((c) => c.slug != "uncategorized").slice(0, 20).map((category) => (
-              <Link
-                key={category.slug}
-                href={`/category/${category.slug}`}
-                className="inline-block px-4 py-2 rounded-lg border border-primary hover:bg-primary-7 hover:text-white transition"
-              >
-                {category.name}
-              </Link>
-              ))}
-              <Link
-                href={`/read`}
-                className="inline-block px-4 py-2 rounded-lg border text-neutral-50 bg-primary hover:bg-primary-7 transition"
-              >
-                সব লিখা
-              </Link>
+              <div className="flex flex-col gap-4">
+                <hr />
+                <div className="flex justify-between items-center text-xs">
+                  <p></p>
+                  <p>TODAY</p>
+                </div>
+              </div>
+            </Link>
           </div>
-          {filteredPosts.length > 0 ? (
-            <div className="grid md:grid-cols-3 gap-4 z-0">
-              {filteredPosts.map((post: any) => (
-                <PostCard key={post.id} post={post} />
-              ))}
-              <Link
-                href={`/contact`}
-                className={cn(
-                  "border-dashed border-4 p-4 border-primary rounded-xl group flex justify-between flex-col not-prose gap-8",
-                  "hover:bg-primary-0 transition-all hover:border-primary-7"
-                )}
-              >
-                <div className="flex flex-col gap-4">
-                  <div className="h-48 w-full overflow-hidden relative rounded-xl border flex items-center justify-center">
-                    <Image
-                      className="h-full w-full object-cover"
-                      src="https://cms.sholo.info/wp-content/uploads/2024/01/likte.png"
-                      alt="Write for Sholo"
-                      width={400}
-                      height={200}
-                    />
-                  </div>
-                  <div
-                    className="text-2xl text-display font-medium decoration-muted-foreground underline-offset-4 decoration-dotted transition-all"
-                  >তোমার লিখা ষোলোতে দেখতে চাও?</div>
-                  <div
-                    className="text-sm"
-                  >তোমার কি লেখালেখি করতে ভালো লাগে? তোমার লিখা আমাদের কাছে পাঠিয়ে দাও এবং পৌঁছে যাও হাজারও কিশোর-তরুণদের কাছে</div>
-                </div>
+        ) : (
+          <div className="h-24 w-full border rounded-lg bg-accent/25 flex items-center justify-center">
+            <p>No Results Found</p>
+          </div>
+        )}
 
-                <div className="flex flex-col gap-4">
-                  <hr />
-                  <div className="flex justify-between items-center text-xs">
-                    <p></p>
-                    <p>TODAY</p>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          ) : (
-            <div className="h-24 w-full border rounded-lg bg-accent/25 flex items-center justify-center">
-              <p>No Results Found</p>
-            </div>
-          )}
+      </Section>
+      <Section>
+        <h2 className="font-display text-2xl font-bold"></h2>
 
-        </Section>
-        <Section>
-          <h2 className="font-display text-2xl font-bold"></h2>
+        <MasonryGallery />
 
-          <MasonryGallery />
-
-        </Section>
+      </Section>
       </Container>
     </div>
   );

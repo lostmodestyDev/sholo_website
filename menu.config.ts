@@ -31,4 +31,8 @@ export const contentMenu = {
     path: "/faqs",
     display: "যত প্রশ্ন",
   },
+  contribute: {
+    path: "/contribute",
+    display: "সহযোগিতা করুন",
+  },
 };

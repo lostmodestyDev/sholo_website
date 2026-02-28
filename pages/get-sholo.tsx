@@ -155,6 +155,15 @@ export default function GetSholo(props: GetSholoProps) {
     const products = [
         {
             type: "magazine",
+            SKU: "MAG-11",
+            price: 50,
+            images: [
+                "https://cms.sholo.info/wp-content/uploads/2026/01/Sholo-11-Cover.jpg",
+            ],
+            title: "১১ম সংখ্যা"
+        },
+        {
+            type: "magazine",
             SKU: "MAG-10",
             price: 50,
             images: [

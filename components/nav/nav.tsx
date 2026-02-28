@@ -1,5 +1,5 @@
 import { mainMenu } from "@/menu.config";
-import { SearchModal, metadata } from "@/pages/_app";
+import { SearchModal } from "@/components/ui/search-modal";
 import { SearchIcon } from "lucide-react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -80,7 +80,7 @@ export const Nav = ({ className, children, id }: NavProps) => {
                     <Button asChild className="hidden sm:flex" variant={scrolled ? "default" : "outline"} size="sm">
                         <Link href="/get-sholo">ষোলো কিনুন</Link>
                     </Button>
-                    <MobileNav title={metadata.title?.toString()} setSearchOpen={setOpen} />
+                    <MobileNav title="ষোলো" setSearchOpen={setOpen} />
                 </div>
             </div>
         </nav>
