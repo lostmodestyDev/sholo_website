@@ -158,7 +158,8 @@ export default function GetSholo(props: GetSholoProps) {
             SKU: "MAG-11",
             price: 50,
             images: [
-                "https://cms.sholo.info/wp-content/uploads/2026/01/Sholo-11-Cover.jpg",
+                "https://cms.sholo.info/wp-content/uploads/2026/02/sholo-11-edition-cover.jpg",
+                "https://cms.sholo.info/wp-content/uploads/2026/02/11th-edition-Final-2_page-0001.jpg.jpeg",
             ],
             title: "১১ম সংখ্যা"
         },
@@ -306,10 +307,6 @@ export default function GetSholo(props: GetSholoProps) {
             </div>
 
 
-            <div className="max-w-5xl mx-auto">
-                <h2 className="text-xl font-bold mb-4">লাইব্রেরি</h2>
-                তোমার এলাকার লাইব্রেরিতে ষোলো পাওয়া যাচ্ছে কিনা দেখতে <a href='https://docs.google.com/document/d/1PLl-w7VTg-CeGYuSJyVWRwLmUJ3uNsCI968BdeS9qQY/edit?tab=t.0' className='underline' >এখানে ক্লিক করো। </a>
-            </div>
             <div className="max-w-5xl mx-auto">
                 <h2 className="text-xl font-bold mb-4">অনলাইনে অর্ডার।</h2>
                 <ul className="space-y-4 flex flex-col sm:flex-row sm:space-x-16 sm:space-y-0">

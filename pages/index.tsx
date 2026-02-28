@@ -226,7 +226,7 @@ export default function Home({
                 <div className="absolute inset-0 bg-secondary/30 rounded-2xl blur-2xl transform rotate-6"></div>
                 <div className="relative bg-white p-3 rounded-2xl shadow-2xl transform hover:rotate-0 rotate-3 transition-transform duration-300">
                   <Image
-                    src="https://cms.sholo.info/wp-content/uploads/2026/01/Sholo-10-Cover.jpg"
+                    src="https://cms.sholo.info/wp-content/uploads/2026/02/sholo-11-edition-cover.jpg"
                     alt="Sholo Magazine Cover"
                     width={300}
                     height={400}
