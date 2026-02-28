@@ -38,6 +38,10 @@ import { SocialShare } from "@/components/ui/social-share";
 //   };
 // }
 
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, "").trim();
+}
+
 export default function Page({ post, site, type }: { post: Post, site: Object, type: "post" | "page" }) {
   const featuredMedia = post.featuredImage?.node.sourceUrl;
   const author = post.author.node;
@@ -59,13 +63,12 @@ export default function Page({ post, site, type }: { post: Post, site: Object, t
     <Section>
       <Head>
         <title>{post.title} | ষোলো</title>
-        <meta name="description" content={post.excerpt} />
-        <meta property="image" content={post.featuredImage?.node?.sourceUrl} />
-        <meta property="url" content={`sholo.org/${post.slug}`} />
+        <link rel="canonical" href={`https://www.sholo.org/${post.slug}`} />
+        <meta name="description" content={stripHtml(post.excerpt ?? "")} />
         <meta property="og:title" content={`${post.title} | ষোলো`} />
-        <meta property="og:description" content={post.excerpt} />
+        <meta property="og:description" content={stripHtml(post.excerpt ?? "")} />
         <meta property="og:image" content={post.featuredImage?.node?.sourceUrl} />
-        <meta property="og:url" content={`sholo.org/${post.slug}`} />
+        <meta property="og:url" content={`https://www.sholo.org/${post.slug}`} />
       </Head>
       <Container>
         {featuredMedia && <div className="h-64 mb-12 md:h-[400px] overflow-hidden flex items-center justify-center border rounded-lg bg-accent/25">

@@ -19,6 +19,7 @@ export default function Page() {
     <Section>
       <Head>
         <title>সাবস্ক্রাইব | ষোলো</title>
+        <link rel="canonical" href="https://www.sholo.org/subscribe" />
       </Head>
       <Container className="max-w-xl">
         <div className="text-center mb-8">

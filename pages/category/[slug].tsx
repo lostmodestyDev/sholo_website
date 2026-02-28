@@ -30,10 +30,12 @@ import Head from "next/head";
 export default function Categories({
   searchParams,
   name,
+  slug,
   posts
 }: {
   searchParams: { [key: string]: string | undefined };
   name: string;
+  slug: string;
   posts: Post[]
 }) {
 
@@ -47,6 +49,7 @@ export default function Categories({
     <Section>
     <Head>
       <title>{name} | ষোলো</title>
+      <link rel="canonical" href={`https://www.sholo.org/category/${slug}`} />
     </Head>
       <Container>
 
@@ -149,6 +152,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     props: {
       posts: data?.data.category.posts.nodes,
       name: data?.data.category.name,
+      slug,
       site
     }
   }

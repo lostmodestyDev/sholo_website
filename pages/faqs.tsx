@@ -17,6 +17,7 @@ export default function Page({ faqs }: { faqs: Faq[] }) {
     <Section>
       <Head>
         <title>যত প্রশ্ন | ষোলো</title>
+        <link rel="canonical" href="https://www.sholo.org/faqs" />
       </Head>
       <Container>
         <h2>যত প্রশ্ন</h2>

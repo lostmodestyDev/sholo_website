@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Head from "next/head"
 import { Modal } from "@/components/ui/modal"
 import { google } from "googleapis"
 import fs from "fs/promises"
@@ -196,6 +197,10 @@ export default function GetSholo(props: GetSholoProps) {
 
     return (
         <div className='max-w-5xl mx-auto py-4 px-6 sm:px-8'>
+            <Head>
+                <title>প্রাপ্তিস্থান | ষোলো</title>
+                <link rel="canonical" href="https://www.sholo.org/get-sholo" />
+            </Head>
             <h1 className='mt-8 text-left'>প্রাপ্তিস্থান</h1>
             <div className='bg-primary text-white p-4 rounded-lg mt-4 text-center'>
                 <p className='mb-2'>বার্ষিক সাবস্ক্রিপশন মাত্র ৪৯৯ টাকায় ৬ টি সংখ্যা ঘরে বসে পান!</p>

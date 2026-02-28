@@ -23,6 +23,7 @@ export default function Page({ categories }: { categories: Category[] }) {
     <Section>
       <Head>
         <title>ক্যাটাগরিসমূহ | ষোলো</title>
+        <link rel="canonical" href="https://www.sholo.org/categories" />
       </Head>
       <Container>
         <BackButton />

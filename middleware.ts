@@ -29,12 +29,11 @@ export async function middleware(req: NextRequest) {
         query: GET_POST_SLUG_BY_ID,
         variables: { id: postId },
       });
-      console.log(data);
 
       // If a post with the ID is found, redirect to the slug URL
       if (data?.post?.slug) {
         const redirectUrl = `/${data.post.slug}`;
-        return NextResponse.redirect(new URL(redirectUrl, req.url));
+        return NextResponse.redirect(new URL(redirectUrl, req.url), { status: 301 });
       }
 
       // If no slug is found, proceed as usual

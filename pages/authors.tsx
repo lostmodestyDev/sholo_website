@@ -21,6 +21,7 @@ export default function Page( { authors } : {authors: Author[]}) {
     <Section>
       <Head>
         <title>লেখক-লেখিকা | ষোলো</title>
+        <link rel="canonical" href="https://www.sholo.org/authors" />
       </Head>
       <Container>
         <BackButton />

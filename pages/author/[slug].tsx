@@ -31,10 +31,12 @@ export default function Home({
   searchParams,
   posts,
   name,
+  slug,
 }: {
   searchParams: { [key: string]: string | undefined };
   posts: Post[],
   name: string,
+  slug: string,
 }) {
 
   const { page: pageParam } = { page: "1" };
@@ -47,6 +49,7 @@ export default function Home({
     <Section>
       <Head>
         <title>{name} @ ষোলো</title>
+        <link rel="canonical" href={`https://www.sholo.org/author/${slug}`} />
       </Head>
       <Container>
 
@@ -149,6 +152,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     props: {
       posts: data?.data.user.posts.nodes,
       name: data?.data.user.name,
+      slug,
       site
     }
   }
