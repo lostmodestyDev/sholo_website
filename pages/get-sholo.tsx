@@ -22,8 +22,17 @@ type Representitive = {
     phone: number
 }
 
+type Product = {
+    type: string
+    SKU: string
+    price: number
+    images: string[]
+    title: string
+}
+
 type GetSholoProps = {
     representitives: Representitive[] | null
+    products: Product[]
 }
 
 function enToBnNumber(input: string | number): string {
@@ -143,7 +152,7 @@ const RepresentitiveDropdown = ({
 }
 
 export default function GetSholo(props: GetSholoProps) {
-    const { representitives } = props
+    const { representitives, products } = props
 
     const [selectedDivision, setSelectedDivision] = useState<string>("")
     const [selectedDistrict, setSelectedDistrict] = useState<string>("")
@@ -151,47 +160,6 @@ export default function GetSholo(props: GetSholoProps) {
 
     const [isProductImageModalOpen, setProductImageModalOpen] = useState(false)
     const [product, setProduct] = useState<{ images: string[], title: string }>({ images: [], title: "" })
-
-    const products = [
-        {
-            type: "magazine",
-            SKU: "MAG-11",
-            price: 50,
-            images: [
-                "https://cms.sholo.info/wp-content/uploads/2026/02/sholo-11-edition-cover.jpg",
-                "https://cms.sholo.info/wp-content/uploads/2026/02/11th-edition-Final-2_page-0001.jpg.jpeg",
-            ],
-            title: "১১ম সংখ্যা"
-        },
-        {
-            type: "magazine",
-            SKU: "MAG-10",
-            price: 50,
-            images: [
-                "https://cms.sholo.info/wp-content/uploads/2026/01/Sholo-10-Cover.jpg",
-            ],
-            title: "১০ম সংখ্যা"
-        },
-        {
-            type: "magazine",
-            SKU: "MAG-9",
-            price: 60,
-            images: [
-                "https://cms.sholo.info/wp-content/uploads/2025/09/Sholo-July-Cover-FInal-small.png",
-                "https://cms.sholo.info/wp-content/uploads/2025/09/Sholo-July-ondormohol-small.png"
-            ],
-            title: "জুলাই অভ্যুত্থান সংখ্যা"
-        },
-        {
-            type: "tshirt",
-            SKU: "TSHIRT-1",
-            price: 350,
-            images: [
-                "https://cms.sholo.info/wp-content/uploads/2025/07/Sholo-T-shirt.jpg",
-            ],
-            title: "টি-শার্ট"
-        },
-    ]
 
     if (!representitives) {
         return <div>No data found</div>
@@ -373,16 +341,16 @@ export async function getStaticProps() {
     })
     const sheets = google.sheets({ version: "v4", auth })
 
-    // Read data
-    const range = "Sheet1!A2:F"
-    const response = await sheets.spreadsheets.values.get({
+    // Read representative data
+    const representitivesRange = "Sheet1!A2:F"
+    const representitivesResponse = await sheets.spreadsheets.values.get({
         spreadsheetId: sheetId,
-        range,
+        range: representitivesRange,
     })
 
     // Map rows to your type
-    const rows = response.data.values || []
-    const representitives = rows.map((row, idx) => ({
+    const representitiveRows = representitivesResponse.data.values || []
+    const representitives = representitiveRows.map((row) => ({
         id: row[0],
         name: row[1] || "",
         phone: Number(row[2]) || 0,
@@ -391,9 +359,30 @@ export async function getStaticProps() {
         division: row[5] || "",
     }))
 
+    // Read product data
+    const productsRange = "Products!A2:E"
+    const productsResponse = await sheets.spreadsheets.values.get({
+        spreadsheetId: sheetId,
+        range: productsRange,
+    })
+
+    // Map rows to your type
+    const productRows = productsResponse.data.values || []
+    const products = productRows.map((row) => ({
+        type: row[0] || "",
+        SKU: row[1] || "",
+        price: Number(row[2]) || 0,
+        images: (row[3] || "")
+        .split(",")
+        .map((url: string) => url.trim())
+        .filter(Boolean),
+        title: row[4] || "",
+    }))
+
     return {
         props: {
             representitives,
+            products,
         },
         revalidate: 3600,
     }

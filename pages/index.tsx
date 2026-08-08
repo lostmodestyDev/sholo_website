@@ -17,6 +17,7 @@ import image3 from "../public/image 3.png";
 import image4 from "../public/image 4.png";
 import image5 from "../public/image 5.png";
 import image6 from "../public/image 6.png";
+import heroImage from "../public/hero-image.png"
 import quote from "../public/quote.svg";
 import { getApolloClient } from "@/lib/wordpress";
 import PostCard from "@/components/posts/post-card";
@@ -223,19 +224,19 @@ export default function Home({
             {/* Right content - Magazine cover */}
             <div className="hidden md:flex justify-center items-center">
               <div className="relative">
-                <div className="absolute inset-0 bg-secondary/30 rounded-2xl blur-2xl transform rotate-6"></div>
-                <div className="relative bg-white p-3 rounded-2xl shadow-2xl transform hover:rotate-0 rotate-3 transition-transform duration-300">
+                <div className="absolute inset-0 rounded-2xl blur-2xl transform rotate-6"></div>
+                {/* <div className="relative bg-white p-3 rounded-2xl shadow-2xl transform hover:rotate-0 rotate-3 transition-transform duration-300"> */}
                   <Image
-                    src="https://cms.sholo.info/wp-content/uploads/2026/02/sholo-11-edition-cover.jpg"
-                    alt="Sholo Magazine Cover"
-                    width={300}
-                    height={400}
+                    src={heroImage}
+                    alt="Sholo Study Circle"
+                    width={650}
+                    height={650}
                     className="rounded-xl"
                   />
-                  <div className="absolute -bottom-4 -right-4 bg-secondary-8 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                  {/* <div className="absolute -bottom-4 -right-4 bg-secondary-8 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
                     নতুন সংখ্যা!
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
